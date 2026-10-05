@@ -105,3 +105,51 @@ test("menu has no horizontal overflow on mobile", async ({ page, isMobile }) => 
   const viewportWidth = page.viewportSize()?.width ?? 0;
   expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });
+
+test("product detail page renders", async ({ page }) => {
+  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Chicken Ranch Pizza" }),
+  ).toBeVisible();
+  await expect(page.getByText("4.8")).toBeVisible();
+  await expect(page.getByText("(128 reviews)")).toBeVisible();
+});
+
+test("product detail breadcrumb renders", async ({ page }) => {
+  await page.goto("/menu/prod-chicken-ranch-pizza");
+  const breadcrumb = page.getByRole("navigation", { name: "Breadcrumb" });
+  await expect(breadcrumb).toBeVisible();
+  await expect(breadcrumb.getByRole("link", { name: "Menu" })).toBeVisible();
+  await expect(breadcrumb.getByRole("link", { name: "Pizza" })).toBeVisible();
+});
+
+test("product detail configuration works", async ({ page }) => {
+  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.getByRole("radio", { name: /Large/ }).click();
+  await page.getByRole("radio", { name: /Cheese/ }).click();
+  await page.getByRole("checkbox", { name: /Extra Cheese/ }).click();
+  await page.getByRole("button", { name: "Increase quantity" }).click();
+  await expect(page.getByLabel("Quantity:")).toHaveText("2");
+});
+
+test("product detail add to cart shows confirmation", async ({ page }) => {
+  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.getByRole("button", { name: /Add to Cart/i }).click();
+  await expect(page.getByText(/Added to Cart/i)).toBeVisible();
+});
+
+test("product detail has no horizontal overflow on mobile", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, "Mobile-only test");
+  await page.goto("/menu/prod-chicken-ranch-pizza");
+  const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+  const viewportWidth = page.viewportSize()?.width ?? 0;
+  expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("invalid product shows not found", async ({ page }) => {
+  const response = await page.goto("/menu/invalid-product-id");
+  expect(response?.status()).toBe(404);
+});

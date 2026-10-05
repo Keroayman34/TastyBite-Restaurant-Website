@@ -1,4 +1,57 @@
-import type { Product } from "@/domain/entities";
+import type { Product, ProductOption } from "@/domain/entities";
+
+const pizzaSizeOption: ProductOption = {
+  id: "opt-size",
+  name: "Size",
+  required: true,
+  multiple: false,
+  choices: [
+    { id: "choice-small", name: "Small", priceDelta: 0 },
+    { id: "choice-medium", name: "Medium", priceDelta: 20 },
+    { id: "choice-large", name: "Large", priceDelta: 40 },
+  ],
+};
+
+const burgerSizeOption: ProductOption = {
+  id: "opt-size",
+  name: "Size",
+  required: true,
+  multiple: false,
+  choices: [
+    { id: "choice-small", name: "Small", priceDelta: 0 },
+    { id: "choice-medium", name: "Medium", priceDelta: 10 },
+    { id: "choice-large", name: "Large", priceDelta: 20 },
+  ],
+};
+
+const crustOption: ProductOption = {
+  id: "opt-crust",
+  name: "Crust",
+  required: true,
+  multiple: false,
+  choices: [
+    { id: "choice-classic", name: "Classic", priceDelta: 0 },
+    { id: "choice-cheese", name: "Cheese", priceDelta: 30 },
+    { id: "choice-thin", name: "Thin", priceDelta: 0 },
+  ],
+};
+
+const extrasOption: ProductOption = {
+  id: "opt-extras",
+  name: "Extras",
+  required: false,
+  multiple: true,
+  choices: [
+    { id: "choice-extra-cheese", name: "Extra Cheese", priceDelta: 20 },
+    { id: "choice-olives", name: "Olives", priceDelta: 15 },
+    { id: "choice-chicken", name: "Chicken", priceDelta: 30 },
+    { id: "choice-jalapeno", name: "Jalapeño", priceDelta: 10 },
+  ],
+};
+
+const pizzaOptions: ProductOption[] = [pizzaSizeOption, crustOption, extrasOption];
+const burgerOptions: ProductOption[] = [burgerSizeOption, extrasOption];
+const defaultOptions: ProductOption[] = [burgerSizeOption, extrasOption];
 
 export const products: Product[] = [
   {
@@ -10,29 +63,9 @@ export const products: Product[] = [
     image: "/images/products/margherita-pizza.svg",
     available: true,
     tags: ["popular", "veggie"],
-    options: [
-      {
-        id: "opt-size",
-        name: "Size",
-        required: true,
-        multiple: false,
-        choices: [
-          { id: "choice-medium", name: 'Medium (10")', priceDelta: 0 },
-          { id: "choice-large", name: 'Large (14")', priceDelta: 40 },
-        ],
-      },
-      {
-        id: "opt-crust",
-        name: "Crust",
-        required: true,
-        multiple: false,
-        choices: [
-          { id: "choice-classic", name: "Classic", priceDelta: 0 },
-          { id: "choice-thin", name: "Thin & Crispy", priceDelta: 0 },
-          { id: "choice-stuffed", name: "Cheese Stuffed", priceDelta: 30 },
-        ],
-      },
-    ],
+    rating: 4.5,
+    reviewCount: 96,
+    options: pizzaOptions,
   },
   {
     id: "prod-chicken-ranch-pizza",
@@ -43,18 +76,9 @@ export const products: Product[] = [
     image: "/images/products/chicken-ranch-pizza.svg",
     available: true,
     tags: ["popular", "new"],
-    options: [
-      {
-        id: "opt-size",
-        name: "Size",
-        required: true,
-        multiple: false,
-        choices: [
-          { id: "choice-medium", name: 'Medium (10")', priceDelta: 0 },
-          { id: "choice-large", name: 'Large (14")', priceDelta: 40 },
-        ],
-      },
-    ],
+    rating: 4.8,
+    reviewCount: 128,
+    options: pizzaOptions,
   },
   {
     id: "prod-pepperoni-pizza",
@@ -65,18 +89,9 @@ export const products: Product[] = [
     image: "/images/products/pepperoni-pizza.svg",
     available: true,
     tags: ["popular", "spicy"],
-    options: [
-      {
-        id: "opt-size",
-        name: "Size",
-        required: true,
-        multiple: false,
-        choices: [
-          { id: "choice-medium", name: 'Medium (10")', priceDelta: 0 },
-          { id: "choice-large", name: 'Large (14")', priceDelta: 40 },
-        ],
-      },
-    ],
+    rating: 4.6,
+    reviewCount: 112,
+    options: pizzaOptions,
   },
   {
     id: "prod-classic-burger",
@@ -87,28 +102,9 @@ export const products: Product[] = [
     image: "/images/products/classic-cheeseburger.svg",
     available: true,
     tags: ["popular"],
-    options: [
-      {
-        id: "opt-patty",
-        name: "Patty",
-        required: true,
-        multiple: false,
-        choices: [
-          { id: "choice-single", name: "Single", priceDelta: 0 },
-          { id: "choice-double", name: "Double", priceDelta: 40 },
-        ],
-      },
-      {
-        id: "opt-extras",
-        name: "Extras",
-        required: false,
-        multiple: true,
-        choices: [
-          { id: "choice-bacon", name: "Smoked Bacon", priceDelta: 20 },
-          { id: "choice-avocado", name: "Avocado", priceDelta: 15 },
-        ],
-      },
-    ],
+    rating: 4.7,
+    reviewCount: 89,
+    options: burgerOptions,
   },
   {
     id: "prod-bbq-burger",
@@ -119,18 +115,9 @@ export const products: Product[] = [
     image: "/images/products/bbq-smokehouse-burger.svg",
     available: true,
     tags: ["popular", "offer"],
-    options: [
-      {
-        id: "opt-cheese",
-        name: "Cheese",
-        required: false,
-        multiple: true,
-        choices: [
-          { id: "choice-cheddar", name: "Aged Cheddar", priceDelta: 15 },
-          { id: "choice-pepper-jack", name: "Pepper Jack", priceDelta: 15 },
-        ],
-      },
-    ],
+    rating: 4.4,
+    reviewCount: 67,
+    options: burgerOptions,
   },
   {
     id: "prod-crispy-chicken",
@@ -141,7 +128,9 @@ export const products: Product[] = [
     image: "/images/products/crispy-chicken.svg",
     available: true,
     tags: ["popular"],
-    options: [],
+    rating: 4.5,
+    reviewCount: 74,
+    options: defaultOptions,
   },
   {
     id: "prod-chicken-sandwich",
@@ -152,7 +141,9 @@ export const products: Product[] = [
     image: "/images/products/crispy-chicken-sandwich.jpg",
     available: true,
     tags: ["new"],
-    options: [],
+    rating: 4.3,
+    reviewCount: 45,
+    options: defaultOptions,
   },
   {
     id: "prod-pasta-alfredo",
@@ -163,7 +154,9 @@ export const products: Product[] = [
     image: "/images/products/pasta-alfredo.svg",
     available: true,
     tags: ["popular", "veggie"],
-    options: [],
+    rating: 4.6,
+    reviewCount: 82,
+    options: defaultOptions,
   },
   {
     id: "prod-caesar-salad",
@@ -174,7 +167,9 @@ export const products: Product[] = [
     image: "/images/products/caesar-salad.jpg",
     available: true,
     tags: ["veggie", "new"],
-    options: [],
+    rating: 4.2,
+    reviewCount: 38,
+    options: defaultOptions,
   },
   {
     id: "prod-garden-salad",
@@ -185,7 +180,9 @@ export const products: Product[] = [
     image: "/images/products/garden-salad.jpg",
     available: true,
     tags: ["veggie"],
-    options: [],
+    rating: 4.1,
+    reviewCount: 29,
+    options: defaultOptions,
   },
   {
     id: "prod-fruit-smoothie",
@@ -196,7 +193,9 @@ export const products: Product[] = [
     image: "/images/products/berry-smoothie.jpg",
     available: true,
     tags: ["new", "veggie"],
-    options: [],
+    rating: 4.4,
+    reviewCount: 51,
+    options: defaultOptions,
   },
   {
     id: "prod-fresh-lemonade",
@@ -207,7 +206,9 @@ export const products: Product[] = [
     image: "/images/products/fresh-lemonade.jpg",
     available: false,
     tags: ["veggie"],
-    options: [],
+    rating: 4.0,
+    reviewCount: 22,
+    options: defaultOptions,
   },
   {
     id: "prod-chocolate-lava-cake",
@@ -219,7 +220,9 @@ export const products: Product[] = [
     image: "/images/products/chocolate-lava-cake.jpg",
     available: true,
     tags: ["popular", "offer"],
-    options: [],
+    rating: 4.9,
+    reviewCount: 156,
+    options: defaultOptions,
   },
   {
     id: "prod-strawberry-cheesecake",
@@ -230,6 +233,8 @@ export const products: Product[] = [
     image: "/images/products/strawberry-cheesecake.jpg",
     available: true,
     tags: ["new"],
-    options: [],
+    rating: 4.7,
+    reviewCount: 93,
+    options: defaultOptions,
   },
 ];

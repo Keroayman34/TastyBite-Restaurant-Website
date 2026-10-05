@@ -21,5 +21,7 @@ export interface Product {
   image: string;
   available: boolean;
   tags: string[];
+  rating: number;
+  reviewCount: number;
   options: ProductOption[];
 }
