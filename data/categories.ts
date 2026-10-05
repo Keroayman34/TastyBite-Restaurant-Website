@@ -2,13 +2,6 @@ import type { Category } from "@/domain/entities";
 
 export const categories: Category[] = [
   {
-    id: "cat-burgers",
-    name: "Burgers",
-    description: "Juicy handcrafted burgers with premium toppings",
-    image: "/images/categories/burgers.jpg",
-    slug: "burgers",
-  },
-  {
     id: "cat-pizza",
     name: "Pizza",
     description: "Wood-fired pizzas with fresh ingredients",
@@ -16,18 +9,39 @@ export const categories: Category[] = [
     slug: "pizza",
   },
   {
-    id: "cat-sandwiches",
-    name: "Sandwiches",
-    description: "Toasted sandwiches made to order",
-    image: "/images/categories/sandwiches.jpg",
-    slug: "sandwiches",
+    id: "cat-burgers",
+    name: "Burgers",
+    description: "Juicy handcrafted burgers with premium toppings",
+    image: "/images/categories/burgers.jpg",
+    slug: "burgers",
   },
   {
-    id: "cat-appetizers",
-    name: "Appetizers",
-    description: "Perfect starters to share or enjoy solo",
-    image: "/images/categories/appetizers.jpg",
-    slug: "appetizers",
+    id: "cat-chicken",
+    name: "Chicken",
+    description: "Crispy and grilled chicken favorites",
+    image: "/images/categories/chicken.jpg",
+    slug: "chicken",
+  },
+  {
+    id: "cat-pasta",
+    name: "Pasta",
+    description: "Fresh pasta with rich homemade sauces",
+    image: "/images/categories/pasta.jpg",
+    slug: "pasta",
+  },
+  {
+    id: "cat-salads",
+    name: "Salads",
+    description: "Fresh and healthy salad bowls",
+    image: "/images/categories/salads.jpg",
+    slug: "salads",
+  },
+  {
+    id: "cat-drinks",
+    name: "Drinks",
+    description: "Refreshing beverages and shakes",
+    image: "/images/categories/drinks.jpg",
+    slug: "drinks",
   },
   {
     id: "cat-desserts",
@@ -35,12 +49,5 @@ export const categories: Category[] = [
     description: "Sweet treats to finish your meal",
     image: "/images/categories/desserts.jpg",
     slug: "desserts",
-  },
-  {
-    id: "cat-beverages",
-    name: "Beverages",
-    description: "Refreshing drinks and shakes",
-    image: "/images/categories/beverages.jpg",
-    slug: "beverages",
   },
 ];
