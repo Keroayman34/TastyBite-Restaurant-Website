@@ -33,7 +33,7 @@ test("featured dishes section renders", async ({ page }) => {
   await expect(
     page.getByRole("heading", { level: 2, name: "Featured Dishes" }),
   ).toBeVisible();
-  await expect(page.getByText("Classic Cheeseburger")).toBeVisible();
+  await expect(page.getByText("Margherita Pizza")).toBeVisible();
 });
 
 test("CTA banner renders", async ({ page }) => {
@@ -52,4 +52,56 @@ test("mobile menu opens and closes", async ({ page, isMobile }) => {
   await expect(page.getByRole("button", { name: "Close menu" })).toBeVisible();
   await page.getByRole("button", { name: "Close menu" }).click();
   await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
+});
+
+test("menu page loads with products", async ({ page }) => {
+  await page.goto("/menu");
+  await expect(page.getByRole("heading", { level: 2, name: "Our Menu" })).toBeVisible();
+  await expect(page.getByText("Margherita Pizza").first()).toBeVisible();
+});
+
+test("menu category navigation works", async ({ page }) => {
+  await page.goto("/menu");
+  await page.getByRole("button", { name: "Pizza" }).first().click();
+  await expect(page).toHaveURL(/category=pizza/);
+  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await expect(page.getByText("Margherita Pizza").first()).toBeVisible();
+});
+
+test("menu search filters products", async ({ page }) => {
+  await page.goto("/menu");
+  const searchInput = page.getByPlaceholder("Search for pizza, burger...");
+  await searchInput.fill("margherita");
+  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await expect(page.getByText("Classic Burger")).not.toBeVisible();
+});
+
+test("menu filter chips work", async ({ page }) => {
+  await page.goto("/menu");
+  await page.getByRole("button", { name: "Veggie" }).click();
+  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await expect(page.getByText("Classic Burger")).not.toBeVisible();
+});
+
+test("menu sort works", async ({ page }) => {
+  await page.goto("/menu");
+  await page.getByLabel("Sort products").selectOption("price-asc");
+  const prices = await page.locator("text=/EGP/").allTextContents();
+  expect(prices.length).toBeGreaterThan(0);
+});
+
+test("menu shows empty state for no matches", async ({ page }) => {
+  await page.goto("/menu");
+  const searchInput = page.getByPlaceholder("Search for pizza, burger...");
+  await searchInput.fill("xyznonexistent");
+  await page.waitForSelector("text=No products found", { timeout: 10000 });
+  await expect(page.getByText("No products found")).toBeVisible();
+});
+
+test("menu has no horizontal overflow on mobile", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "Mobile-only test");
+  await page.goto("/menu");
+  const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+  const viewportWidth = page.viewportSize()?.width ?? 0;
+  expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });

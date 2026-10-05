@@ -12,13 +12,13 @@ describe("FeaturedSection", () => {
 
   it("renders featured product cards", () => {
     render(<FeaturedSection />);
-    expect(screen.getByText("Classic Cheeseburger")).toBeInTheDocument();
     expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
+    expect(screen.getByText("Classic Burger")).toBeInTheDocument();
   });
 
   it("renders product prices", () => {
     render(<FeaturedSection />);
-    expect(screen.getByText("$12.99")).toBeInTheDocument();
+    expect(screen.getByText(/EGP\s*180/)).toBeInTheDocument();
   });
 
   it("renders view full menu CTA", () => {
