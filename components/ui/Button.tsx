@@ -6,31 +6,38 @@ type Variant = "primary" | "secondary" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-brand-500 text-white shadow-cta hover:bg-brand-600 active:bg-brand-700",
-  secondary: "bg-accent-100 text-accent-800 hover:bg-accent-200 active:bg-accent-300",
+  primary:
+    "bg-primary-500 text-white shadow-cta hover:bg-primary-600 active:bg-primary-700",
+  secondary:
+    "bg-accent-100 text-accent-800 hover:bg-accent-200 active:bg-accent-300",
   outline:
-    "border border-charcoal-200 bg-surface text-charcoal-800 hover:border-charcoal-300 hover:bg-charcoal-50",
-  ghost: "text-charcoal-700 hover:bg-charcoal-100 hover:text-charcoal-900",
+    "border border-border-strong bg-surface text-foreground hover:border-charcoal-300 hover:bg-charcoal-50",
+  ghost: "text-foreground-muted hover:bg-charcoal-100 hover:text-foreground",
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "h-9 px-4 text-sm",
-  md: "h-11 px-6 text-base",
-  lg: "h-13 px-8 text-lg",
+  sm: "h-9 px-4 text-body-sm",
+  md: "h-11 px-6 text-button",
+  lg: "h-13 px-8 text-body-lg",
 };
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   variant?: Variant;
   size?: Size;
   href?: string;
+  fullWidth?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", size = "md", href, className, children, ...props }, ref) => {
+  (
+    { variant = "primary", size = "md", href, fullWidth = false, className, children, ...props },
+    ref,
+  ) => {
     const classes = cn(
-      "inline-flex items-center justify-center gap-2 rounded-button font-semibold transition-colors duration-150 disabled:pointer-events-none disabled:opacity-50",
+      "inline-flex items-center justify-center gap-2 rounded-button font-semibold transition-all duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
       variantClasses[variant],
       sizeClasses[size],
+      fullWidth && "w-full",
       className,
     );
 
