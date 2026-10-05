@@ -29,6 +29,17 @@ The project follows a feature-based architecture inspired by Clean Architecture:
 - `lib/` — shared utilities
 - `tests/` — unit, component, and e2e test suites
 
+## Design System
+
+- Semantic color tokens (primary, accent, success, warning, error, foreground, border)
+- Fluid typography scale (display, h1–h4, body, caption, label, button, nav)
+- Standardized spacing, border radius, and shadow tokens
+- Reusable UI primitives (Button, Card, Badge, Container, Input, SectionHeading, IconButton)
+- Responsive breakpoints for mobile through large desktop
+- Accessible focus states, skip navigation, and semantic HTML
+
+An internal design system preview is available at `/design-system` for development reference.
+
 ## Features
 
 - Next.js foundation with App Router and TypeScript strict mode
@@ -61,4 +72,4 @@ npm run build
 
 ## Project Status
 
-Phase 1 — Foundation
+Phase 2 — Design System & UI Foundation
