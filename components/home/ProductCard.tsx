@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { formatPrice } from "@/lib/format";
+import { restaurant } from "@/config/restaurant";
 import type { Product } from "@/domain/entities";
 
 export function ProductCard({ product }: { product: Product }) {
@@ -18,9 +19,9 @@ export function ProductCard({ product }: { product: Product }) {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             fallbackClassName="h-full w-full"
           />
-          {product.tags.includes("bestseller") ? (
+          {product.tags.includes("popular") ? (
             <Badge variant="brand" className="absolute left-3 top-3">
-              Bestseller
+              Popular
             </Badge>
           ) : null}
         </div>
@@ -32,7 +33,7 @@ export function ProductCard({ product }: { product: Product }) {
             {product.description}
           </p>
           <p className="text-body font-semibold text-primary-600">
-            {formatPrice(product.basePrice)}
+            {formatPrice(product.basePrice, restaurant.currency)}
           </p>
         </div>
       </Card>

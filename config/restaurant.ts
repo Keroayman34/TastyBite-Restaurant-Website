@@ -20,6 +20,6 @@ export const restaurant: Restaurant = {
     { id: "youtube", platform: "youtube", url: "https://youtube.com/@tastybite" },
   ],
   mapUrl: "https://maps.google.com/?q=123+Flavor+Street+Foodville",
-  currency: "USD",
+  currency: "EGP",
   deliveryFee: 2.99,
 };
