@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TastyBite Restaurant Website
 
-## Getting Started
+A modern, responsive restaurant web platform with a digital menu, product browsing, shopping cart, WhatsApp ordering, offers, reviews, locations, and gallery experiences.
 
-First, run the development server:
+## Overview
+
+TastyBite is a production-oriented restaurant website built as a frontend-only Next.js application. The architecture separates domain entities, typed demo data, restaurant configuration, services, and UI concerns so that content can be replaced without rewriting presentation code.
+
+## Technology Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **UI:** React 18, TypeScript, Tailwind CSS
+- **Icons:** Lucide React
+- **Forms:** React Hook Form, Zod
+- **State:** React Context + useReducer, localStorage
+- **Testing:** Vitest, React Testing Library, Playwright
+- **Code Quality:** ESLint, Prettier
+
+## Architecture
+
+The project follows a feature-based architecture inspired by Clean Architecture:
+
+- `app/` — routes and pages
+- `components/` — reusable UI primitives and layout components
+- `domain/` — entities and repository contracts
+- `data/` — typed demo datasets (products, categories, offers, locations, reviews, gallery)
+- `config/` — centralized restaurant configuration
+- `services/` — infrastructure abstractions (storage)
+- `lib/` — shared utilities
+- `tests/` — unit, component, and e2e test suites
+
+## Features
+
+- Next.js foundation with App Router and TypeScript strict mode
+- Domain entities for products, categories, offers, cart, locations, and reviews
+- Typed demo data layer separated from presentation
+- Centralized restaurant configuration
+- Design token system (brand colors, typography, spacing, radius, shadows)
+- Reusable UI primitives (Button, Card, Badge, Container, Input, SectionHeading)
+- Layout foundation with Header and Footer
+- Local storage abstraction for future cart persistence
+- Unit, component, and end-to-end testing foundation
+- Continuous integration workflow
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Testing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run test:e2e
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project Status
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Phase 1 — Foundation

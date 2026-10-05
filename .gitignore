@@ -26,7 +26,18 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
+.env.local
+.env.production
 .env*.local
+
+# secrets
+*.pem
+*.key
+
+# test artifacts
+/test-results/
+/playwright-report/
 
 # vercel
 .vercel
