@@ -1,0 +1,232 @@
+import type { Product } from "@/domain/entities";
+
+export const products: Product[] = [
+  {
+    id: "prod-classic-burger",
+    name: "Classic Cheeseburger",
+    description:
+      "A juicy beef patty with melted cheddar, crisp lettuce, tomato, pickles, and our signature sauce on a toasted brioche bun.",
+    categoryId: "cat-burgers",
+    basePrice: 12.99,
+    image: "/images/products/classic-cheeseburger.jpg",
+    available: true,
+    tags: ["bestseller", "beef"],
+    options: [
+      {
+        id: "opt-patty",
+        name: "Patty",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "choice-single", name: "Single", priceDelta: 0 },
+          { id: "choice-double", name: "Double", priceDelta: 4.0 },
+        ],
+      },
+      {
+        id: "opt-extras",
+        name: "Extras",
+        required: false,
+        multiple: true,
+        choices: [
+          { id: "choice-bacon", name: "Smoked Bacon", priceDelta: 2.0 },
+          { id: "choice-avocado", name: "Avocado", priceDelta: 1.5 },
+          { id: "choice-fried-egg", name: "Fried Egg", priceDelta: 1.0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "prod-bbq-burger",
+    name: "BBQ Smokehouse Burger",
+    description:
+      "Slow-cooked pulled beef, smoky BBQ sauce, crispy onion rings, and coleslaw on a sesame seed bun.",
+    categoryId: "cat-burgers",
+    basePrice: 14.99,
+    image: "/images/products/bbq-smokehouse-burger.jpg",
+    available: true,
+    tags: ["smoky", "popular"],
+    options: [
+      {
+        id: "opt-cheese",
+        name: "Cheese",
+        required: false,
+        multiple: true,
+        choices: [
+          { id: "choice-cheddar", name: "Aged Cheddar", priceDelta: 1.5 },
+          { id: "choice-pepper-jack", name: "Pepper Jack", priceDelta: 1.5 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "prod-margherita-pizza",
+    name: "Margherita Pizza",
+    description:
+      "San Marzano tomato sauce, fresh mozzarella di bufala, basil, and extra virgin olive oil on a wood-fired crust.",
+    categoryId: "cat-pizza",
+    basePrice: 13.99,
+    image: "/images/products/margherita-pizza.jpg",
+    available: true,
+    tags: ["vegetarian", "classic"],
+    options: [
+      {
+        id: "opt-size",
+        name: "Size",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "choice-medium", name: 'Medium (10")', priceDelta: 0 },
+          { id: "choice-large", name: 'Large (14")', priceDelta: 4.0 },
+        ],
+      },
+      {
+        id: "opt-crust",
+        name: "Crust",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "choice-classic", name: "Classic", priceDelta: 0 },
+          { id: "choice-thin", name: "Thin & Crispy", priceDelta: 0 },
+          { id: "choice-stuffed", name: "Cheese Stuffed", priceDelta: 3.0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "prod-pepperoni-pizza",
+    name: "Pepperoni Feast Pizza",
+    description:
+      "Loaded with double pepperoni, mozzarella, and our house tomato sauce. A timeless favorite.",
+    categoryId: "cat-pizza",
+    basePrice: 15.99,
+    image: "/images/products/pepperoni-pizza.jpg",
+    available: true,
+    tags: ["bestseller", "spicy-option"],
+    options: [
+      {
+        id: "opt-size",
+        name: "Size",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "choice-medium", name: 'Medium (10")', priceDelta: 0 },
+          { id: "choice-large", name: 'Large (14")', priceDelta: 4.0 },
+        ],
+      },
+      {
+        id: "opt-heat",
+        name: "Heat Level",
+        required: false,
+        multiple: false,
+        choices: [
+          { id: "choice-mild", name: "Mild", priceDelta: 0 },
+          { id: "choice-spicy", name: "Spicy Chili Drizzle", priceDelta: 0.5 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "prod-chicken-sandwich",
+    name: "Crispy Chicken Sandwich",
+    description:
+      "Buttermilk-fried chicken breast, honey mustard slaw, and pickles on a toasted potato bun.",
+    categoryId: "cat-sandwiches",
+    basePrice: 11.49,
+    image: "/images/products/crispy-chicken-sandwich.jpg",
+    available: true,
+    tags: ["crispy"],
+    options: [],
+  },
+  {
+    id: "prod-caesar-salad-wrap",
+    name: "Caesar Salad Wrap",
+    description:
+      "Grilled chicken, romaine, parmesan, and Caesar dressing wrapped in a warm tortilla.",
+    categoryId: "cat-sandwiches",
+    basePrice: 10.49,
+    image: "/images/products/caesar-salad-wrap.jpg",
+    available: true,
+    tags: ["light", "chicken"],
+    options: [],
+  },
+  {
+    id: "prod-loaded-fries",
+    name: "Loaded Cheese Fries",
+    description:
+      "Crispy fries topped with cheese sauce, bacon bits, jalapeños, and sour cream.",
+    categoryId: "cat-appetizers",
+    basePrice: 8.99,
+    image: "/images/products/loaded-fries.jpg",
+    available: true,
+    tags: ["shareable", "popular"],
+    options: [],
+  },
+  {
+    id: "prod-wings",
+    name: "Buffalo Wings (8 pcs)",
+    description: "Crispy chicken wings tossed in buffalo sauce with a cool ranch dip.",
+    categoryId: "cat-appetizers",
+    basePrice: 10.99,
+    image: "/images/products/buffalo-wings.jpg",
+    available: true,
+    tags: ["spicy", "shareable"],
+    options: [
+      {
+        id: "opt-sauce",
+        name: "Sauce",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "choice-buffalo", name: "Buffalo", priceDelta: 0 },
+          { id: "choice-honey-bbq", name: "Honey BBQ", priceDelta: 0 },
+          { id: "choice-garlic-parmesan", name: "Garlic Parmesan", priceDelta: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "prod-chocolate-lava-cake",
+    name: "Chocolate Lava Cake",
+    description:
+      "Warm chocolate cake with a molten center, served with vanilla ice cream.",
+    categoryId: "cat-desserts",
+    basePrice: 7.49,
+    image: "/images/products/chocolate-lava-cake.jpg",
+    available: true,
+    tags: ["sweet", "warm"],
+    options: [],
+  },
+  {
+    id: "prod-cheesecake",
+    name: "Strawberry Cheesecake",
+    description: "Creamy New York cheesecake with a strawberry compote topping.",
+    categoryId: "cat-desserts",
+    basePrice: 6.99,
+    image: "/images/products/strawberry-cheesecake.jpg",
+    available: true,
+    tags: ["sweet"],
+    options: [],
+  },
+  {
+    id: "prod-vanilla-shake",
+    name: "Vanilla Milkshake",
+    description: "Thick and creamy vanilla bean milkshake topped with whipped cream.",
+    categoryId: "cat-beverages",
+    basePrice: 5.49,
+    image: "/images/products/vanilla-milkshake.jpg",
+    available: true,
+    tags: ["drink", "sweet"],
+    options: [],
+  },
+  {
+    id: "prod-lemonade",
+    name: "Fresh Lemonade",
+    description: "Freshly squeezed lemons with a hint of mint.",
+    categoryId: "cat-beverages",
+    basePrice: 3.99,
+    image: "/images/products/fresh-lemonade.jpg",
+    available: false,
+    tags: ["drink", "refreshing"],
+    options: [],
+  },
+];
