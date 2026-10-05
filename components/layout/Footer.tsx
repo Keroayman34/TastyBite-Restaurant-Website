@@ -91,9 +91,7 @@ export function Footer() {
           <p className="text-caption text-foreground-subtle">
             &copy; {new Date().getFullYear()} {restaurant.name}. All rights reserved.
           </p>
-          <p className="text-caption text-foreground-subtle">
-            {restaurant.tagline}
-          </p>
+          <p className="text-caption text-foreground-subtle">{restaurant.tagline}</p>
         </div>
       </Container>
     </footer>

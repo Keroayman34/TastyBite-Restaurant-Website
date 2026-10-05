@@ -9,9 +9,16 @@ export interface InputProps extends ComponentPropsWithoutRef<"input"> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, helperText, required, hideRequiredMarker, id, className, ...props }, ref) => {
+  (
+    { label, error, helperText, required, hideRequiredMarker, id, className, ...props },
+    ref,
+  ) => {
     const inputId = id ?? props.name;
-    const messageId = error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined;
+    const messageId = error
+      ? `${inputId}-error`
+      : helperText
+        ? `${inputId}-helper`
+        : undefined;
 
     return (
       <div className="flex flex-col gap-1.5">

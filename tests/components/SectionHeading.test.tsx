@@ -5,7 +5,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 describe("SectionHeading", () => {
   it("renders title", () => {
     render(<SectionHeading title="Our Menu" />);
-    expect(screen.getByRole("heading", { level: 2, name: "Our Menu" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Our Menu" }),
+    ).toBeInTheDocument();
   });
 
   it("renders eyebrow when provided", () => {

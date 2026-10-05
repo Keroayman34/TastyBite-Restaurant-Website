@@ -1,4 +1,11 @@
-import { Facebook, Instagram, Youtube, Twitter, MessageCircle, type LucideIcon } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Youtube,
+  Twitter,
+  MessageCircle,
+  type LucideIcon,
+} from "lucide-react";
 import type { SocialPlatform } from "@/domain/entities";
 
 const platformIcons: Record<SocialPlatform, LucideIcon> = {

@@ -8,8 +8,7 @@ type Size = "sm" | "md" | "lg";
 const variantClasses: Record<Variant, string> = {
   primary:
     "bg-primary-500 text-white shadow-cta hover:bg-primary-600 active:bg-primary-700",
-  secondary:
-    "bg-accent-100 text-accent-800 hover:bg-accent-200 active:bg-accent-300",
+  secondary: "bg-accent-100 text-accent-800 hover:bg-accent-200 active:bg-accent-300",
   outline:
     "border border-border-strong bg-surface text-foreground hover:border-charcoal-300 hover:bg-charcoal-50",
   ghost: "text-foreground-muted hover:bg-charcoal-100 hover:text-foreground",
@@ -30,7 +29,15 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { variant = "primary", size = "md", href, fullWidth = false, className, children, ...props },
+    {
+      variant = "primary",
+      size = "md",
+      href,
+      fullWidth = false,
+      className,
+      children,
+      ...props
+    },
     ref,
   ) => {
     const classes = cn(

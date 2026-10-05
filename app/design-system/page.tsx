@@ -72,12 +72,18 @@ export default function DesignSystemPage() {
           <h2 className="text-h2 text-foreground">H2 — Section heading</h2>
           <h3 className="text-h3 text-foreground">H3 — Subsection heading</h3>
           <h4 className="text-h4 text-foreground">H4 — Card heading</h4>
-          <p className="text-body-lg text-foreground">Body large — Emphasized paragraph text.</p>
-          <p className="text-body text-foreground">Body — Default paragraph text for content.</p>
+          <p className="text-body-lg text-foreground">
+            Body large — Emphasized paragraph text.
+          </p>
+          <p className="text-body text-foreground">
+            Body — Default paragraph text for content.
+          </p>
           <p className="text-body-sm text-foreground-muted">
             Body small — Supporting text and descriptions.
           </p>
-          <p className="text-caption text-foreground-subtle">Caption — Metadata and timestamps.</p>
+          <p className="text-caption text-foreground-subtle">
+            Caption — Metadata and timestamps.
+          </p>
         </div>
       </PreviewSection>
 
@@ -108,7 +114,11 @@ export default function DesignSystemPage() {
           <Input label="Default" placeholder="Enter your name" />
           <Input label="With helper text" helperText="We'll never share your email." />
           <Input label="Required" required placeholder="Enter your email" type="email" />
-          <Input label="Error" error="This field is required." placeholder="Enter your phone" />
+          <Input
+            label="Error"
+            error="This field is required."
+            placeholder="Enter your phone"
+          />
           <Input label="Disabled" disabled placeholder="Unavailable" />
         </div>
       </PreviewSection>
@@ -119,11 +129,15 @@ export default function DesignSystemPage() {
             <p className="text-body-sm text-foreground-muted">Default padding</p>
           </Card>
           <Card padding="lg" hoverable>
-            <p className="text-body-sm text-foreground-muted">Hoverable — shadow elevates</p>
+            <p className="text-body-sm text-foreground-muted">
+              Hoverable — shadow elevates
+            </p>
           </Card>
           <Card padding="none">
             <div className="bg-charcoal-50 p-5">
-              <p className="text-body-sm text-foreground-muted">No padding — custom content</p>
+              <p className="text-body-sm text-foreground-muted">
+                No padding — custom content
+              </p>
             </div>
           </Card>
         </div>

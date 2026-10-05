@@ -11,7 +11,10 @@ describe("IconButton", () => {
 
   it("has button type by default", () => {
     render(<IconButton label="Search" />);
-    expect(screen.getByRole("button", { name: "Search" })).toHaveAttribute("type", "button");
+    expect(screen.getByRole("button", { name: "Search" })).toHaveAttribute(
+      "type",
+      "button",
+    );
   });
 
   it("is disabled when disabled prop is set", () => {

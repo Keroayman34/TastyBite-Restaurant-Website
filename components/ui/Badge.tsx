@@ -1,7 +1,8 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "default" | "brand" | "accent" | "success" | "warning" | "error" | "outline";
+type Variant =
+  "default" | "brand" | "accent" | "success" | "warning" | "error" | "outline";
 
 const variantClasses: Record<Variant, string> = {
   default: "bg-charcoal-100 text-charcoal-700",

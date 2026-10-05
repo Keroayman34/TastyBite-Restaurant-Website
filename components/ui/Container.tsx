@@ -12,7 +12,12 @@ export interface ContainerProps extends ComponentPropsWithoutRef<"div"> {
   size?: Size;
 }
 
-export function Container({ size = "default", className, children, ...props }: ContainerProps) {
+export function Container({
+  size = "default",
+  className,
+  children,
+  ...props
+}: ContainerProps) {
   return (
     <div className={cn(sizeClasses[size], className)} {...props}>
       {children}
