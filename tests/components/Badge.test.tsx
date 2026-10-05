@@ -10,6 +10,6 @@ describe("Badge", () => {
 
   it("applies brand variant classes", () => {
     render(<Badge variant="brand">New</Badge>);
-    expect(screen.getByText("New")).toHaveClass("bg-brand-50");
+    expect(screen.getByText("New")).toHaveClass("bg-primary-50");
   });
 });
