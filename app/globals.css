@@ -3,12 +3,27 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --text-display: clamp(2.5rem, 5vw, 3.75rem);
+    --text-h1: clamp(2rem, 4vw, 3rem);
+    --text-h2: clamp(1.625rem, 3vw, 2.25rem);
+    --text-h3: clamp(1.25rem, 2vw, 1.5rem);
+    --text-h4: 1.25rem;
+    --text-body-lg: 1.125rem;
+    --text-body: 1rem;
+    --text-body-sm: 0.875rem;
+    --text-caption: 0.75rem;
+    --text-label: 0.875rem;
+    --text-button: 1rem;
+    --text-nav: 0.9375rem;
+  }
+
   html {
     @apply scroll-smooth;
   }
 
   body {
-    @apply bg-surface font-sans text-charcoal-900 antialiased;
+    @apply bg-background font-sans text-foreground antialiased;
   }
 
   h1,
@@ -20,13 +35,40 @@
     @apply font-display;
   }
 
+  ::selection {
+    @apply bg-primary-100 text-primary-900;
+  }
+
   :focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-surface;
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-background;
   }
 }
 
 @layer components {
   .container-page {
     @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-page-narrow {
+    @apply mx-auto w-full max-w-container-narrow px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-spacing {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-button focus:bg-primary-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
