@@ -8,7 +8,7 @@ export const products: Product[] = [
       "A juicy beef patty with melted cheddar, crisp lettuce, tomato, pickles, and our signature sauce on a toasted brioche bun.",
     categoryId: "cat-burgers",
     basePrice: 12.99,
-    image: "/images/products/classic-cheeseburger.jpg",
+    image: "/images/products/classic-cheeseburger.svg",
     available: true,
     tags: ["bestseller", "beef"],
     options: [
@@ -42,7 +42,7 @@ export const products: Product[] = [
       "Slow-cooked pulled beef, smoky BBQ sauce, crispy onion rings, and coleslaw on a sesame seed bun.",
     categoryId: "cat-burgers",
     basePrice: 14.99,
-    image: "/images/products/bbq-smokehouse-burger.jpg",
+    image: "/images/products/bbq-smokehouse-burger.svg",
     available: true,
     tags: ["smoky", "popular"],
     options: [
@@ -65,7 +65,7 @@ export const products: Product[] = [
       "San Marzano tomato sauce, fresh mozzarella di bufala, basil, and extra virgin olive oil on a wood-fired crust.",
     categoryId: "cat-pizza",
     basePrice: 13.99,
-    image: "/images/products/margherita-pizza.jpg",
+    image: "/images/products/margherita-pizza.svg",
     available: true,
     tags: ["vegetarian", "classic"],
     options: [
@@ -99,7 +99,7 @@ export const products: Product[] = [
       "Loaded with double pepperoni, mozzarella, and our house tomato sauce. A timeless favorite.",
     categoryId: "cat-pizza",
     basePrice: 15.99,
-    image: "/images/products/pepperoni-pizza.jpg",
+    image: "/images/products/pepperoni-pizza.svg",
     available: true,
     tags: ["bestseller", "spicy-option"],
     options: [
