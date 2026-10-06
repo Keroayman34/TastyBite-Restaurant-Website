@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartContext";
 import { restaurant } from "@/config/restaurant";
+import { getStructuredData } from "@/lib/seo/structured-data";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
@@ -12,11 +13,30 @@ export const metadata: Metadata = {
     template: `%s | ${restaurant.name}`,
   },
   description: `${restaurant.name} — ${restaurant.tagline}. Browse our menu, order online, and enjoy delicious food delivered to your door.`,
+  applicationName: restaurant.name,
+  keywords: ["restaurant", "food delivery", "pizza", "burgers", "chicken", "pasta"],
   openGraph: {
     title: `${restaurant.name} — ${restaurant.tagline}`,
     description:
       "Browse our menu, order online, and enjoy delicious food delivered to your door.",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+    siteName: restaurant.name,
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${restaurant.name} — ${restaurant.tagline}`,
+    description:
+      "Browse our menu, order online, and enjoy delicious food delivered to your door.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 
@@ -33,6 +53,10 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getStructuredData()) }}
         />
       </head>
       <body className="flex min-h-screen flex-col">

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#1A1917"/>
+  <rect width="1200" height="630" fill="url(#grad)"/>
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8442E"/>
+      <stop offset="100%" stop-color="#F9910B"/>
+    </linearGradient>
+  </defs>
+  <circle cx="600" cy="280" r="120" fill="#E8442E" opacity="0.3"/>
+  <text x="600" y="300" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#ffffff" text-anchor="middle">TastyBite</text>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="32" fill="#ffffff" text-anchor="middle" opacity="0.8">Bite into happiness</text>
+  <text x="600" y="520" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" text-anchor="middle" opacity="0.6">Delicious food, delivered fast</text>
+</svg>
