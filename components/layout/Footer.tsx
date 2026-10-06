@@ -1,5 +1,5 @@
 import { restaurant } from "@/config/restaurant";
-import { navLinks } from "@/config/navigation";
+import { footerLinks } from "@/config/navigation";
 import { Container } from "@/components/ui/Container";
 import { SocialIcon } from "@/components/layout/SocialIcon";
 import { MapPin, Mail, Phone } from "lucide-react";
@@ -38,7 +38,7 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-h4 text-foreground">Quick Links</h3>
             <nav className="flex flex-col gap-2" aria-label="Footer">
-              {navLinks.map((link) => (
+              {footerLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
