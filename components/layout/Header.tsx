@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/Button";
 import { IconButton } from "@/components/ui/IconButton";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { NavLinks } from "@/components/layout/NavLinks";
-import { Search, ShoppingCart } from "lucide-react";
+import { CartIcon } from "@/components/cart/CartIcon";
+import { Search } from "lucide-react";
 
 export function Header() {
   return (
@@ -32,12 +33,7 @@ export function Header() {
           >
             <Search className="h-5 w-5" />
           </IconButton>
-          <IconButton
-            label="Cart"
-            className="text-white/70 hover:bg-white/10 hover:text-white"
-          >
-            <ShoppingCart className="h-5 w-5" />
-          </IconButton>
+          <CartIcon />
           <Button href={`tel:${restaurant.phone}`} className="hidden md:inline-flex">
             Order Now
           </Button>

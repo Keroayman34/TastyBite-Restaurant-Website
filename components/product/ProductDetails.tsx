@@ -9,6 +9,7 @@ import { CrustSelector } from "@/components/product/CrustSelector";
 import { ExtrasSelector } from "@/components/product/ExtrasSelector";
 import { QuantitySelector } from "@/components/product/QuantitySelector";
 import { Button } from "@/components/ui/Button";
+import { useCart } from "@/components/cart/CartContext";
 import { calculateProductPrice, findOption, MIN_QUANTITY } from "@/lib/menu/pricing";
 import { formatPrice } from "@/lib/format";
 import { restaurant } from "@/config/restaurant";
@@ -19,6 +20,7 @@ interface ProductDetailsProps {
 }
 
 export function ProductDetails({ product }: ProductDetailsProps) {
+  const { addItem } = useCart();
   const sizeOption = findOption(product, "opt-size");
   const crustOption = findOption(product, "opt-crust");
   const extrasOption = findOption(product, "opt-extras");
@@ -91,11 +93,9 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       subtotal: pricing.subtotal,
     };
 
+    addItem(cartItem);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
-
-    // Phase 6 will implement cart persistence through CartRepository
-    void cartItem;
   }, [
     product,
     pricing,
@@ -105,6 +105,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
     sizeOption,
     crustOption,
     extrasOption,
+    addItem,
   ]);
 
   return (
