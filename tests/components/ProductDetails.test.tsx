@@ -5,30 +5,32 @@ import { ProductDetails } from "@/components/product/ProductDetails";
 import { renderWithCart } from "@/tests/helpers";
 import { products } from "@/data/products";
 
-const pizza = products.find((p) => p.id === "prod-chicken-ranch-pizza")!;
+const pizza = products.find((p) => p.id === "prod-bbq-chicken-pizza")!;
 
 describe("ProductDetails", () => {
   it("renders product name", () => {
     renderWithCart(<ProductDetails product={pizza} />);
     expect(
-      screen.getByRole("heading", { level: 1, name: "Chicken Ranch Pizza" }),
+      screen.getByRole("heading", { level: 1, name: "BBQ Chicken Pizza" }),
     ).toBeInTheDocument();
   });
 
   it("renders product description", () => {
     renderWithCart(<ProductDetails product={pizza} />);
-    expect(screen.getByText("Chicken, ranch sauce, mozzarella")).toBeInTheDocument();
+    expect(
+      screen.getByText("Grilled chicken, BBQ sauce, red onions, and mozzarella."),
+    ).toBeInTheDocument();
   });
 
   it("renders rating and review count", () => {
     renderWithCart(<ProductDetails product={pizza} />);
-    expect(screen.getByText("4.8")).toBeInTheDocument();
-    expect(screen.getByText("(128 reviews)")).toBeInTheDocument();
+    expect(screen.getByText("4.7")).toBeInTheDocument();
+    expect(screen.getByText("(89 reviews)")).toBeInTheDocument();
   });
 
   it("renders base price", () => {
     renderWithCart(<ProductDetails product={pizza} />);
-    expect(screen.getAllByText(/EGP\s*220/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/EGP\s*230/)[0]).toBeInTheDocument();
   });
 
   it("renders size options", () => {
@@ -57,21 +59,21 @@ describe("ProductDetails", () => {
     const user = userEvent.setup();
     renderWithCart(<ProductDetails product={pizza} />);
     await user.click(screen.getByRole("radio", { name: /Large/ }));
-    expect(screen.getAllByText(/EGP\s*260/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/EGP\s*270/)[0]).toBeInTheDocument();
   });
 
   it("updates price when crust changes", async () => {
     const user = userEvent.setup();
     renderWithCart(<ProductDetails product={pizza} />);
     await user.click(screen.getByRole("radio", { name: /Cheese/ }));
-    expect(screen.getAllByText(/EGP\s*250/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/EGP\s*260/)[0]).toBeInTheDocument();
   });
 
   it("updates price when extra is selected", async () => {
     const user = userEvent.setup();
     renderWithCart(<ProductDetails product={pizza} />);
     await user.click(screen.getByRole("checkbox", { name: /Extra Cheese/ }));
-    expect(screen.getAllByText(/EGP\s*240/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/EGP\s*250/)[0]).toBeInTheDocument();
   });
 
   it("removes extra adjustment when deselected", async () => {
@@ -80,7 +82,7 @@ describe("ProductDetails", () => {
     const extraCheese = screen.getByRole("checkbox", { name: /Extra Cheese/ });
     await user.click(extraCheese);
     await user.click(extraCheese);
-    expect(screen.getAllByText(/EGP\s*220/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/EGP\s*230/)[0]).toBeInTheDocument();
   });
 
   it("increments quantity", async () => {
