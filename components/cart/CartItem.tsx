@@ -27,7 +27,7 @@ export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemP
 
   return (
     <div className="flex gap-4 rounded-card border border-border bg-surface p-4 shadow-card">
-      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-image bg-charcoal-50">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-image bg-charcoal-50">
         <ImageWithFallback
           src={item.product.image}
           alt={item.product.name}

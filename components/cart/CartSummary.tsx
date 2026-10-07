@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { restaurant } from "@/config/restaurant";
 
@@ -36,6 +37,13 @@ export function CartSummary({ subtotal, deliveryFee, total }: CartSummaryProps) 
           </div>
         </div>
       </div>
+
+      <Link
+        href="/checkout"
+        className="mt-2 inline-flex h-12 items-center justify-center rounded-button bg-primary-500 text-body-lg font-semibold text-white shadow-cta transition-colors hover:bg-primary-600"
+      >
+        Proceed to Checkout
+      </Link>
     </div>
   );
 }
