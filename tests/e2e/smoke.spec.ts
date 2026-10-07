@@ -153,3 +153,102 @@ test("invalid product shows not found", async ({ page }) => {
   const response = await page.goto("/menu/invalid-product-id");
   expect(response?.status()).toBe(404);
 });
+
+test("about page loads with content", async ({ page }) => {
+  await page.goto("/about");
+  await expect(page.getByRole("heading", { level: 2, name: "Our Story" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "View Menu" })).toBeVisible();
+});
+
+test("offers page loads with offer cards", async ({ page }) => {
+  await page.goto("/offers");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Deals You Can't Resist" }),
+  ).toBeVisible();
+  await expect(page.getByText("Family Burger Bundle")).toBeVisible();
+});
+
+test("contact page loads with contact methods", async ({ page }) => {
+  await page.goto("/contact");
+  await expect(page.getByRole("heading", { level: 2, name: "Contact Us" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Phone/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /WhatsApp/i })).toBeVisible();
+});
+
+test("locations page loads with branch selector", async ({ page }) => {
+  await page.goto("/locations");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Our Locations" }),
+  ).toBeVisible();
+  await expect(page.getByRole("tab", { name: /Downtown/i })).toBeVisible();
+});
+
+test("reviews page loads with review cards", async ({ page }) => {
+  await page.goto("/reviews");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "What Our Customers Say" }),
+  ).toBeVisible();
+  await expect(page.getByText("Sarah M.")).toBeVisible();
+});
+
+test("gallery page loads with image grid", async ({ page }) => {
+  await page.goto("/gallery");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Follow Us On Instagram" }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "All" })).toBeVisible();
+});
+
+test("full checkout flow generates WhatsApp URL", async ({ page }) => {
+  await page.goto("/menu/prod-margherita-pizza");
+  await page.getByRole("button", { name: /Add to Cart/i }).click();
+  await page.waitForTimeout(500);
+  await page.goto("/cart");
+  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await expect(page.getByText("Margherita Pizza")).toBeVisible();
+  await page.getByRole("link", { name: /Proceed to Checkout/i }).click();
+  await expect(page.getByRole("heading", { level: 1, name: "Checkout" })).toBeVisible();
+  await page.getByLabel("Full Name").fill("Test User");
+  await page.getByLabel("Phone Number").fill("01234567890");
+  await page.getByLabel("Address").fill("123 Test Street");
+  await page.evaluate(() => {
+    (window as unknown as { __openedUrl: string }).__openedUrl = "";
+    const originalOpen = window.open;
+    window.open = (url?: string | URL) => {
+      (window as unknown as { __openedUrl: string }).__openedUrl = String(url);
+      return originalOpen.call(window, url, "_blank", "noopener,noreferrer");
+    };
+  });
+  await page.getByRole("button", { name: /Confirm Order via WhatsApp/i }).click();
+  await page.waitForTimeout(500);
+  const openedUrl = await page.evaluate(
+    () => (window as unknown as { __openedUrl: string }).__openedUrl,
+  );
+  expect(openedUrl).toMatch(/wa\.me|api\.whatsapp\.com/);
+});
+
+test("cart persists after page reload", async ({ page }) => {
+  await page.goto("/menu/prod-margherita-pizza");
+  await page.getByRole("button", { name: /Add to Cart/i }).click();
+  await page.waitForTimeout(500);
+  await page.goto("/cart");
+  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await expect(page.getByText("Margherita Pizza")).toBeVisible();
+  await page.reload();
+  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await expect(page.getByText("Margherita Pizza")).toBeVisible();
+});
+
+test("secondary pages have no horizontal overflow on mobile", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, "Mobile-only test");
+  const pages = ["/about", "/offers", "/contact", "/locations", "/reviews", "/gallery"];
+  for (const path of pages) {
+    await page.goto(path);
+    const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+    const viewportWidth = page.viewportSize()?.width ?? 0;
+    expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
+  }
+});
