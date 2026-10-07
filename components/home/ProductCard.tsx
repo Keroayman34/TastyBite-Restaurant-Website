@@ -8,7 +8,7 @@ import type { Product } from "@/domain/entities";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href="/menu" className="group block">
+    <Link href={`/menu/${product.id}`} className="group block">
       <Card hoverable padding="none" className="overflow-hidden">
         <div className="relative aspect-[4/3] overflow-hidden bg-charcoal-50">
           <ImageWithFallback
