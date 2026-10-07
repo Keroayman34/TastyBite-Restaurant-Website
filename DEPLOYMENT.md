@@ -40,24 +40,29 @@ Vercel is the native hosting platform for Next.js and requires zero configuratio
 #### Deployment Steps
 
 1. **Install Vercel CLI:**
+
    ```bash
    npm i -g vercel
    ```
 
 2. **Login to Vercel:**
+
    ```bash
    vercel login
    ```
 
 3. **Deploy to production:**
+
    ```bash
    vercel --prod
    ```
 
 4. **Set environment variable:**
+
    ```bash
    vercel env add NEXT_PUBLIC_SITE_URL
    ```
+
    Enter the production URL (e.g., `https://tastybite.vercel.app`) when prompted.
 
 5. **Redeploy after env change:**
@@ -83,8 +88,8 @@ Requires Node.js 18.17+ on the server. Use a reverse proxy (nginx, Caddy) for HT
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|---|---|---|
+| Variable               | Required    | Description                                                       |
+| ---------------------- | ----------- | ----------------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | Recommended | Production URL for metadata, canonical links, sitemap, and robots |
 
 **No production secrets are required.** This is a frontend-only application.
@@ -108,14 +113,14 @@ Requires Node.js 18.17+ on the server. Use a reverse proxy (nginx, Caddy) for HT
 
 ### Build Status
 
-| Check | Result |
-|---|---|
-| TypeScript | PASS |
-| ESLint | PASS |
-| Prettier | PASS |
-| Unit/component tests | 208/208 PASS |
-| Playwright E2E | 54/54 PASS |
-| Production build | PASS (32 static pages) |
+| Check                | Result                 |
+| -------------------- | ---------------------- |
+| TypeScript           | PASS                   |
+| ESLint               | PASS                   |
+| Prettier             | PASS                   |
+| Unit/component tests | 208/208 PASS           |
+| Playwright E2E       | 54/54 PASS             |
+| Production build     | PASS (32 static pages) |
 
 ### Critical User Journeys
 

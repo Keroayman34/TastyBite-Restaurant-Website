@@ -13,7 +13,7 @@ describe("FeaturedSection", () => {
   it("renders featured product cards", () => {
     render(<FeaturedSection />);
     expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
-    expect(screen.getByText("Classic Burger")).toBeInTheDocument();
+    expect(screen.getByText("Pepperoni Feast Pizza")).toBeInTheDocument();
   });
 
   it("renders product prices", () => {

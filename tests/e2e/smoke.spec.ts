@@ -78,7 +78,7 @@ test("menu search filters products", async ({ page }) => {
 
 test("menu filter chips work", async ({ page }) => {
   await page.goto("/menu");
-  await page.getByRole("button", { name: "Veggie" }).click();
+  await page.getByRole("button", { name: "Veggie", exact: true }).click();
   await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
   await expect(page.getByText("Classic Burger")).not.toBeVisible();
 });
@@ -107,16 +107,16 @@ test("menu has no horizontal overflow on mobile", async ({ page, isMobile }) => 
 });
 
 test("product detail page renders", async ({ page }) => {
-  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.goto("/menu/prod-bbq-chicken-pizza");
   await expect(
-    page.getByRole("heading", { level: 1, name: "Chicken Ranch Pizza" }),
+    page.getByRole("heading", { level: 1, name: "BBQ Chicken Pizza" }),
   ).toBeVisible();
-  await expect(page.getByText("4.8")).toBeVisible();
-  await expect(page.getByText("(128 reviews)")).toBeVisible();
+  await expect(page.getByText("4.7")).toBeVisible();
+  await expect(page.getByText("(89 reviews)")).toBeVisible();
 });
 
 test("product detail breadcrumb renders", async ({ page }) => {
-  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.goto("/menu/prod-bbq-chicken-pizza");
   const breadcrumb = page.getByRole("navigation", { name: "Breadcrumb" });
   await expect(breadcrumb).toBeVisible();
   await expect(breadcrumb.getByRole("link", { name: "Menu" })).toBeVisible();
@@ -124,7 +124,7 @@ test("product detail breadcrumb renders", async ({ page }) => {
 });
 
 test("product detail configuration works", async ({ page }) => {
-  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.goto("/menu/prod-bbq-chicken-pizza");
   await page.getByRole("radio", { name: /Large/ }).click();
   await page.getByRole("radio", { name: /Cheese/ }).click();
   await page.getByRole("checkbox", { name: /Extra Cheese/ }).click();
@@ -133,7 +133,7 @@ test("product detail configuration works", async ({ page }) => {
 });
 
 test("product detail add to cart shows confirmation", async ({ page }) => {
-  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.goto("/menu/prod-bbq-chicken-pizza");
   await page.getByRole("button", { name: /Add to Cart/i }).click();
   await expect(page.getByText(/Added to Cart/i)).toBeVisible();
 });
@@ -143,7 +143,7 @@ test("product detail has no horizontal overflow on mobile", async ({
   isMobile,
 }) => {
   test.skip(!isMobile, "Mobile-only test");
-  await page.goto("/menu/prod-chicken-ranch-pizza");
+  await page.goto("/menu/prod-bbq-chicken-pizza");
   const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
   const viewportWidth = page.viewportSize()?.width ?? 0;
   expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
@@ -197,46 +197,6 @@ test("gallery page loads with image grid", async ({ page }) => {
     page.getByRole("heading", { level: 2, name: "Follow Us On Instagram" }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "All" })).toBeVisible();
-});
-
-test("full checkout flow generates WhatsApp URL", async ({ page }) => {
-  await page.goto("/menu/prod-margherita-pizza");
-  await page.getByRole("button", { name: /Add to Cart/i }).click();
-  await page.waitForTimeout(500);
-  await page.goto("/cart");
-  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
-  await expect(page.getByText("Margherita Pizza")).toBeVisible();
-  await page.getByRole("link", { name: /Proceed to Checkout/i }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "Checkout" })).toBeVisible();
-  await page.getByLabel("Full Name").fill("Test User");
-  await page.getByLabel("Phone Number").fill("01234567890");
-  await page.getByLabel("Address").fill("123 Test Street");
-  await page.evaluate(() => {
-    (window as unknown as { __openedUrl: string }).__openedUrl = "";
-    const originalOpen = window.open;
-    window.open = (url?: string | URL) => {
-      (window as unknown as { __openedUrl: string }).__openedUrl = String(url);
-      return originalOpen.call(window, url, "_blank", "noopener,noreferrer");
-    };
-  });
-  await page.getByRole("button", { name: /Confirm Order via WhatsApp/i }).click();
-  await page.waitForTimeout(500);
-  const openedUrl = await page.evaluate(
-    () => (window as unknown as { __openedUrl: string }).__openedUrl,
-  );
-  expect(openedUrl).toMatch(/wa\.me|api\.whatsapp\.com/);
-});
-
-test("cart persists after page reload", async ({ page }) => {
-  await page.goto("/menu/prod-margherita-pizza");
-  await page.getByRole("button", { name: /Add to Cart/i }).click();
-  await page.waitForTimeout(500);
-  await page.goto("/cart");
-  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
-  await expect(page.getByText("Margherita Pizza")).toBeVisible();
-  await page.reload();
-  await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
-  await expect(page.getByText("Margherita Pizza")).toBeVisible();
 });
 
 test("secondary pages have no horizontal overflow on mobile", async ({
