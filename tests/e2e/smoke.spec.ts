@@ -211,11 +211,20 @@ test("full checkout flow generates WhatsApp URL", async ({ page }) => {
   await page.getByLabel("Full Name").fill("Test User");
   await page.getByLabel("Phone Number").fill("01234567890");
   await page.getByLabel("Address").fill("123 Test Street");
-  const [popup] = await Promise.all([
-    page.waitForEvent("popup"),
-    page.getByRole("button", { name: /Confirm Order via WhatsApp/i }).click(),
-  ]);
-  expect(popup.url()).toMatch(/wa\.me|api\.whatsapp\.com/);
+  await page.evaluate(() => {
+    (window as unknown as { __openedUrl: string }).__openedUrl = "";
+    const originalOpen = window.open;
+    window.open = (url?: string | URL) => {
+      (window as unknown as { __openedUrl: string }).__openedUrl = String(url);
+      return originalOpen.call(window, url, "_blank", "noopener,noreferrer");
+    };
+  });
+  await page.getByRole("button", { name: /Confirm Order via WhatsApp/i }).click();
+  await page.waitForTimeout(500);
+  const openedUrl = await page.evaluate(
+    () => (window as unknown as { __openedUrl: string }).__openedUrl,
+  );
+  expect(openedUrl).toMatch(/wa\.me|api\.whatsapp\.com/);
 });
 
 test("cart persists after page reload", async ({ page }) => {

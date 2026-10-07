@@ -35,7 +35,7 @@ export function CheckoutSummary({
 
           return (
             <div key={item.id} className="flex gap-3">
-              <div className="h-14 w-14 shrink-0 overflow-hidden rounded-image bg-charcoal-50">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-image bg-charcoal-50">
                 <ImageWithFallback
                   src={item.product.image}
                   alt={item.product.name}
