@@ -2,12 +2,18 @@ import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MenuProductCard } from "@/components/menu/MenuProductCard";
 import { products } from "@/data/products";
+import type { Product } from "@/domain/entities";
 
 describe("MenuProductCard", () => {
   const availableProduct = products.find(
     (p) => p.available && p.id === "prod-margherita-pizza",
   )!;
-  const unavailableProduct = products.find((p) => !p.available)!;
+  const unavailableProduct: Product = {
+    ...availableProduct,
+    id: "prod-unavailable-test",
+    name: "Unavailable Test Product",
+    available: false,
+  };
 
   it("renders product name and description", () => {
     render(<MenuProductCard product={availableProduct} />);
