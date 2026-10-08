@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { Clock, Truck, BadgeCheck } from "lucide-react";
 
 const benefits = [
@@ -75,11 +76,13 @@ export function Hero() {
             className="absolute inset-0 rounded-full bg-primary-500/20 blur-3xl"
             aria-hidden="true"
           />
-          {/* eslint-disable-next-line @next/next/no-img-element -- SVG asset, no optimization needed */}
-          <img
-            src="/images/hero-food.svg"
-            alt="A delicious burger with fries and a drink"
-            className="relative w-full"
+          <ImageWithFallback
+            src="/images/hero-pizza.jpg"
+            alt="A premium wood-fired pizza with melted cheese and fresh toppings"
+            unoptimized
+            fill
+            className="relative rounded-card object-cover"
+            fallbackClassName="h-full w-full"
           />
         </div>
       </Container>
