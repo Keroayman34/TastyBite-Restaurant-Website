@@ -103,18 +103,29 @@ export default function ContactPage() {
               content.
             </p>
             <div className="flex items-center gap-3">
-              {restaurant.socialLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.platform}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors hover:border-primary-500 hover:text-primary-500"
-                >
-                  <SocialIcon platform={link.platform} />
-                </a>
-              ))}
+              {restaurant.socialLinks.map((link) =>
+                link.active ? (
+                  <a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.platform}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors hover:border-primary-500 hover:text-primary-500"
+                  >
+                    <SocialIcon platform={link.platform} />
+                  </a>
+                ) : (
+                  <button
+                    key={link.id}
+                    type="button"
+                    aria-label={`${link.platform} (coming soon)`}
+                    className="flex h-11 w-11 cursor-default items-center justify-center rounded-full border border-border-strong text-foreground-muted/50"
+                  >
+                    <SocialIcon platform={link.platform} />
+                  </button>
+                ),
+              )}
             </div>
           </Card>
         </div>

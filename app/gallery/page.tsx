@@ -22,13 +22,19 @@ export default function GalleryPage() {
           description="Explore our delicious dishes, behind-the-scenes moments, and happy customers."
         />
 
-        {instagramLink ? (
+        {instagramLink?.active ? (
           <div className="flex justify-center">
             <Button href={instagramLink.url} variant="outline" size="lg">
               Follow @tastybite
             </Button>
           </div>
-        ) : null}
+        ) : (
+          <div className="flex justify-center">
+            <Button variant="outline" size="lg" disabled>
+              Follow @tastybite (coming soon)
+            </Button>
+          </div>
+        )}
 
         <GalleryGrid />
       </Container>

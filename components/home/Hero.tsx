@@ -76,14 +76,16 @@ export function Hero() {
             className="absolute inset-0 rounded-full bg-primary-500/20 blur-3xl"
             aria-hidden="true"
           />
-          <ImageWithFallback
-            src="/images/hero-pizza.jpg"
-            alt="A premium wood-fired pizza with melted cheese and fresh toppings"
-            unoptimized
-            fill
-            className="relative rounded-card object-cover"
-            fallbackClassName="h-full w-full"
-          />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-card">
+            <ImageWithFallback
+              src="/images/hero-pizza.jpg"
+              alt="A premium wood-fired pizza with melted cheese and fresh toppings"
+              unoptimized
+              fill
+              className="object-cover"
+              fallbackClassName="h-full w-full"
+            />
+          </div>
         </div>
       </Container>
     </section>
