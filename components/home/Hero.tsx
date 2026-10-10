@@ -1,7 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { Clock, Truck, BadgeCheck } from "lucide-react";
 
 const benefits = [
@@ -76,14 +75,19 @@ export function Hero() {
             className="absolute inset-0 rounded-full bg-primary-500/20 blur-3xl"
             aria-hidden="true"
           />
-          <div className="relative aspect-[4/3] overflow-hidden rounded-card">
-            <ImageWithFallback
+          <div className="relative aspect-[4/3] w-full">
+            <img
               src="/images/hero-pizza.jpg"
               alt="A premium wood-fired pizza with melted cheese and fresh toppings"
-              unoptimized
-              fill
-              className="object-cover"
-              fallbackClassName="h-full w-full"
+              className="h-full w-full object-cover"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-r from-charcoal-900/60 via-transparent to-transparent"
+              aria-hidden="true"
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-charcoal-900/40 via-transparent to-transparent"
+              aria-hidden="true"
             />
           </div>
         </div>
