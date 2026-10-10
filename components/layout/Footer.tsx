@@ -20,18 +20,29 @@ export function Footer() {
             </div>
             <p className="text-body-sm text-foreground-muted">{restaurant.tagline}</p>
             <div className="flex items-center gap-2">
-              {restaurant.socialLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.platform}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors hover:border-primary-500 hover:text-primary-500"
-                >
-                  <SocialIcon platform={link.platform} />
-                </a>
-              ))}
+              {restaurant.socialLinks.map((link) =>
+                link.active ? (
+                  <a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.platform}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors hover:border-primary-500 hover:text-primary-500"
+                  >
+                    <SocialIcon platform={link.platform} />
+                  </a>
+                ) : (
+                  <button
+                    key={link.id}
+                    type="button"
+                    aria-label={`${link.platform} (coming soon)`}
+                    className="flex h-9 w-9 cursor-default items-center justify-center rounded-full border border-border-strong text-foreground-muted/50"
+                  >
+                    <SocialIcon platform={link.platform} />
+                  </button>
+                ),
+              )}
             </div>
           </div>
 

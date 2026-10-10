@@ -5,4 +5,5 @@ export interface SocialLink {
   id: string;
   platform: SocialPlatform;
   url: string;
+  active: boolean;
 }
