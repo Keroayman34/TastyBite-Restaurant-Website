@@ -73,6 +73,10 @@ test("menu search filters products", async ({ page }) => {
   const searchInput = page.getByPlaceholder("Search for pizza, burger...");
   await searchInput.fill("margherita");
   await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await page.waitForFunction(
+    () => !document.body.textContent?.includes("Classic Burger"),
+    { timeout: 10000 },
+  );
   await expect(page.getByText("Classic Burger")).not.toBeVisible();
 });
 
@@ -80,6 +84,10 @@ test("menu filter chips work", async ({ page }) => {
   await page.goto("/menu");
   await page.getByRole("button", { name: "Veggie", exact: true }).click();
   await page.waitForSelector("text=Margherita Pizza", { timeout: 10000 });
+  await page.waitForFunction(
+    () => !document.body.textContent?.includes("Classic Burger"),
+    { timeout: 10000 },
+  );
   await expect(page.getByText("Classic Burger")).not.toBeVisible();
 });
 

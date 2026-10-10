@@ -13,6 +13,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-charcoal-900">
       <div
+        data-testid="hero-background"
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url(/images/hero-pizza.jpg)" }}
         aria-hidden="true"
