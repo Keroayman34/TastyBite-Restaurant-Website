@@ -14,7 +14,12 @@ export function CategoriesSection() {
         />
         <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
           {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
+            <div
+              key={category.id}
+              className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-1.125rem)]"
+            >
+              <CategoryCard category={category} />
+            </div>
           ))}
         </div>
       </Container>

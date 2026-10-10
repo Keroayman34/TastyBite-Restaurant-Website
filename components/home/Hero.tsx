@@ -13,16 +13,21 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-charcoal-900">
       <div
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 70% 40%, rgba(232, 68, 46, 0.3), transparent)",
-        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url(/images/hero-pizza.jpg)" }}
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-charcoal-900 via-charcoal-900/80 to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-charcoal-900/60 via-transparent to-transparent"
         aria-hidden="true"
       />
 
-      <Container className="relative grid grid-cols-1 items-center gap-12 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-28">
-        <div className="flex flex-col items-start gap-6">
+      <Container className="relative flex min-h-[60vh] flex-col justify-center py-20 lg:min-h-[70vh]">
+        <div className="flex max-w-xl flex-col items-start gap-6">
           <Badge variant="brand" className="bg-primary-500/10 text-primary-300">
             #1 Restaurant in Town
           </Badge>
@@ -32,7 +37,7 @@ export function Hero() {
             <span className="text-primary-400"> Delivered Fast</span>
           </h1>
 
-          <p className="max-w-lg text-body-lg text-white/70">
+          <p className="text-body-lg text-white/70">
             From juicy burgers to wood-fired pizzas, we prepare every meal with fresh
             ingredients and deliver it hot to your door.
           </p>
@@ -45,7 +50,7 @@ export function Hero() {
               href="/menu"
               variant="outline"
               size="lg"
-              className="border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
+              className="border-white/20 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
             >
               View Menu
             </Button>
@@ -67,28 +72,6 @@ export function Hero() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-md lg:max-w-lg">
-          <div
-            className="absolute inset-0 rounded-full bg-primary-500/20 blur-3xl"
-            aria-hidden="true"
-          />
-          <div className="relative aspect-[4/3] w-full">
-            <img
-              src="/images/hero-pizza.jpg"
-              alt="A premium wood-fired pizza with melted cheese and fresh toppings"
-              className="h-full w-full object-cover"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-charcoal-900/60 via-transparent to-transparent"
-              aria-hidden="true"
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-charcoal-900/40 via-transparent to-transparent"
-              aria-hidden="true"
-            />
           </div>
         </div>
       </Container>
