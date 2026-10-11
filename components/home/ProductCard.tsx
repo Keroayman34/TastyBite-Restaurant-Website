@@ -15,11 +15,11 @@ export function ProductCard({ product }: { product: Product }) {
         padding="none"
         hoverable
         className={cn(
-          "flex h-full flex-col overflow-hidden transition-shadow",
+          "flex h-[340px] flex-col overflow-hidden transition-shadow sm:h-[380px] lg:h-[400px]",
           !product.available && "opacity-60",
         )}
       >
-        <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-charcoal-50">
+        <div className="relative h-[60%] shrink-0 overflow-hidden bg-charcoal-50">
           <ImageWithFallback
             src={product.image}
             alt={product.name}
@@ -42,14 +42,14 @@ export function ProductCard({ product }: { product: Product }) {
           ) : null}
         </div>
 
-        <div className="flex flex-1 flex-col gap-2 p-5">
+        <div className="flex h-[40%] flex-col gap-2 p-5">
           <h3 className="text-h4 text-foreground transition-colors group-hover:text-primary-600">
             {product.name}
           </h3>
           <p className="line-clamp-2 text-body-sm text-foreground-muted">
             {product.description}
           </p>
-          <div className="mt-auto flex items-center justify-between pt-2">
+          <div className="mt-auto flex items-center justify-between">
             <p className="text-body font-semibold text-primary-600">
               {formatPrice(product.basePrice, restaurant.currency)}
             </p>
