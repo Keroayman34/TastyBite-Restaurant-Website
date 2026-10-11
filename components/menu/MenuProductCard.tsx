@@ -14,15 +14,16 @@ interface MenuProductCardProps {
 
 export function MenuProductCard({ product }: MenuProductCardProps) {
   return (
-    <Link href={`/menu/${product.id}`} className="group block">
+    <Link href={`/menu/${product.id}`} className="group block h-full">
       <Card
         padding="none"
+        hoverable
         className={cn(
-          "overflow-hidden transition-opacity",
+          "flex h-full flex-col overflow-hidden transition-shadow",
           !product.available && "opacity-60",
         )}
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-charcoal-50">
+        <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-charcoal-50">
           <ImageWithFallback
             src={product.image}
             alt={product.name}
@@ -50,14 +51,14 @@ export function MenuProductCard({ product }: MenuProductCardProps) {
           ) : null}
         </div>
 
-        <div className="flex flex-col gap-2 p-4">
+        <div className="flex flex-1 flex-col gap-2 p-5">
           <h3 className="text-h4 text-foreground transition-colors group-hover:text-primary-600">
             {product.name}
           </h3>
           <p className="line-clamp-2 text-body-sm text-foreground-muted">
             {product.description}
           </p>
-          <div className="flex items-center justify-between">
+          <div className="mt-auto flex items-center justify-between pt-2">
             <p className="text-body font-semibold text-primary-600">
               {formatPrice(product.basePrice, restaurant.currency)}
             </p>
@@ -65,10 +66,6 @@ export function MenuProductCard({ product }: MenuProductCardProps) {
               type="button"
               disabled={!product.available}
               aria-label={`Add ${product.name} to cart`}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-500 text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ShoppingCart className="h-4 w-4" />
