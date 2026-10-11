@@ -1,41 +1,23 @@
 import Link from "next/link";
-import {
-  Pizza,
-  Beef,
-  Drumstick,
-  Soup,
-  Salad,
-  CupSoda,
-  IceCreamCone,
-  type LucideIcon,
-} from "lucide-react";
 import { Card } from "@/components/ui/Card";
+import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import type { Category } from "@/domain/entities";
 
-const categoryIcons: Record<string, LucideIcon> = {
-  "cat-pizza": Pizza,
-  "cat-burgers": Beef,
-  "cat-chicken": Drumstick,
-  "cat-pasta": Soup,
-  "cat-salads": Salad,
-  "cat-drinks": CupSoda,
-  "cat-desserts": IceCreamCone,
-};
-
 export function CategoryCard({ category }: { category: Category }) {
-  const Icon = categoryIcons[category.id] ?? Pizza;
-
   return (
     <Link href={`/menu?category=${category.slug}`} className="group block">
-      <Card
-        hoverable
-        padding="lg"
-        className="flex flex-col items-center gap-4 text-center"
-      >
-        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-50 text-primary-500 transition-colors group-hover:bg-primary-500 group-hover:text-white">
-          <Icon className="h-8 w-8" />
-        </span>
-        <div className="flex flex-col gap-1">
+      <Card hoverable padding="none" className="overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden bg-charcoal-50">
+          <ImageWithFallback
+            src={category.image}
+            alt={category.name}
+            unoptimized
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            fallbackClassName="h-full w-full"
+          />
+        </div>
+        <div className="flex flex-col gap-1 p-4 text-center">
           <h3 className="text-h4 text-foreground transition-colors group-hover:text-primary-600">
             {category.name}
           </h3>

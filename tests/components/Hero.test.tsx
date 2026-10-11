@@ -31,11 +31,9 @@ describe("Hero", () => {
     );
   });
 
-  it("renders hero image with alt text", () => {
+  it("renders hero background image", () => {
     render(<Hero />);
-    expect(
-      screen.getByRole("img", { name: /premium wood-fired pizza/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("hero-background")).toBeInTheDocument();
   });
 
   it("renders benefit badges", () => {

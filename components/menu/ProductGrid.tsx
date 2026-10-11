@@ -3,9 +3,14 @@ import type { Product } from "@/domain/entities";
 
 export function ProductGrid({ products }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
       {products.map((product) => (
-        <MenuProductCard key={product.id} product={product} />
+        <div
+          key={product.id}
+          className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-1.125rem)]"
+        >
+          <MenuProductCard product={product} />
+        </div>
       ))}
     </div>
   );

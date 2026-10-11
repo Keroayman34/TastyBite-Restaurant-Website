@@ -12,9 +12,14 @@ export function CategoriesSection() {
           title="Browse by Category"
           description="Explore our wide range of delicious categories made fresh every day."
         />
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+        <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
           {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
+            <div
+              key={category.id}
+              className="w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-1.125rem)]"
+            >
+              <CategoryCard category={category} />
+            </div>
           ))}
         </div>
       </Container>
