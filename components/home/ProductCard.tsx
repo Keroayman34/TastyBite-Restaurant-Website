@@ -19,7 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
           !product.available && "opacity-60",
         )}
       >
-        <div className="relative h-[60%] shrink-0 overflow-hidden bg-charcoal-50">
+        <div className="relative h-[66%] shrink-0 overflow-hidden bg-charcoal-50">
           <ImageWithFallback
             src={product.image}
             alt={product.name}
@@ -42,7 +42,7 @@ export function ProductCard({ product }: { product: Product }) {
           ) : null}
         </div>
 
-        <div className="flex h-[40%] flex-col gap-2 p-5">
+        <div className="flex h-[34%] flex-col gap-2 p-5">
           <h3 className="text-h4 text-foreground transition-colors group-hover:text-primary-600">
             {product.name}
           </h3>
