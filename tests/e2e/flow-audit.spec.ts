@@ -40,3 +40,23 @@ test("FLOW D: header cart navigates to cart page", async ({ page }) => {
   await expect(page).toHaveURL(/\/cart/);
   await expect(page.getByText("Margherita Pizza")).toBeVisible();
 });
+
+test("FLOW E: checkout submits order and displays confirmation", async ({ page }) => {
+  await page.goto("/menu/prod-margherita-pizza", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: /Add to Cart/i }).click();
+  await page.waitForTimeout(500);
+  await page.goto("/checkout", { waitUntil: "networkidle" });
+
+  await page.getByLabel("Full Name").fill("Ahmed Hassan");
+  await page.getByLabel("Phone Number").fill("01012345678");
+  await page.getByLabel("Address").fill("10 Garden City, Cairo");
+  await page.getByLabel("Notes (Optional)").fill("Please deliver to 3rd floor");
+
+  await page.getByRole("button", { name: /Confirm Order via WhatsApp/i }).click();
+
+  await expect(
+    page.getByRole("heading", { level: 2, name: /Order Placed Successfully/i }),
+  ).toBeVisible();
+  await expect(page.getByText("Ahmed Hassan").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Open WhatsApp Again/i })).toBeVisible();
+});

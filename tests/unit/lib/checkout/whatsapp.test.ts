@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { generateWhatsAppMessage, buildWhatsAppUrl } from "@/lib/checkout/whatsapp";
 import { buildWhatsAppOrderPayload } from "@/lib/checkout/order";
+import { restaurant } from "@/config/restaurant";
 import type { CartItem } from "@/domain/entities";
 import type { CheckoutCustomerInfo } from "@/lib/checkout/types";
 
@@ -131,5 +132,12 @@ describe("buildWhatsAppUrl", () => {
     const longMessage = "A".repeat(1000);
     const url = buildWhatsAppUrl("01234567890", longMessage);
     expect(url).toContain(encodeURIComponent(longMessage));
+  });
+
+  it("builds URL with restaurant.whatsapp recipient number", () => {
+    const url = buildWhatsAppUrl(restaurant.whatsapp, "Test Order");
+    const cleanedRestaurantPhone = restaurant.whatsapp.replace(/[^\d]/g, "");
+    expect(url).toContain(`wa.me/${cleanedRestaurantPhone}`);
+    expect(cleanedRestaurantPhone).toBe("15551234567");
   });
 });

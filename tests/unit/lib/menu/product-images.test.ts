@@ -1,6 +1,10 @@
+import fs from "fs";
+import path from "path";
 import { describe, expect, it } from "vitest";
 import { products } from "@/data/products";
 import { categories } from "@/data/categories";
+import { galleryImages } from "@/data/gallery";
+import { restaurant } from "@/config/restaurant";
 
 describe("product image integrity", () => {
   it("every product has an image path defined", () => {
@@ -86,5 +90,24 @@ describe("product image integrity", () => {
         5,
       );
     });
+  });
+
+  it("every gallery image file exists on disk", () => {
+    galleryImages.forEach((img) => {
+      const filePath = path.join(process.cwd(), "public", img.src.replace(/^\//, ""));
+      expect(fs.existsSync(filePath), `Gallery image missing: ${img.src}`).toBe(true);
+    });
+  });
+
+  it("restaurant logo file exists on disk", () => {
+    const filePath = path.join(
+      process.cwd(),
+      "public",
+      restaurant.logoUrl.replace(/^\//, ""),
+    );
+    expect(
+      fs.existsSync(filePath),
+      `Restaurant logo missing: ${restaurant.logoUrl}`,
+    ).toBe(true);
   });
 });

@@ -5,13 +5,21 @@ import { useCart } from "@/components/cart/CartContext";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import { CheckoutSummary } from "@/components/checkout/CheckoutSummary";
 import { CartEmptyState } from "@/components/cart/CartEmptyState";
+import {
+  OrderConfirmation,
+  type OrderConfirmationData,
+} from "@/components/checkout/OrderConfirmation";
 import { buildWhatsAppOrderPayload } from "@/lib/checkout/order";
 import { generateWhatsAppMessage, buildWhatsAppUrl } from "@/lib/checkout/whatsapp";
+import { restaurant } from "@/config/restaurant";
 import type { CheckoutFormData } from "@/lib/checkout/validation";
 
 export function CheckoutPage() {
-  const { items, subtotal, deliveryFee, total } = useCart();
+  const { items, subtotal, deliveryFee, total, clearCart } = useCart();
   const [error, setError] = useState<string | null>(null);
+  const [submittedOrder, setSubmittedOrder] = useState<OrderConfirmationData | null>(
+    null,
+  );
 
   const handleSubmit = useCallback(
     (data: CheckoutFormData) => {
@@ -23,14 +31,30 @@ export function CheckoutPage() {
       try {
         const order = buildWhatsAppOrderPayload(items, data);
         const message = generateWhatsAppMessage(order);
-        const url = buildWhatsAppUrl(order.customer.phone, message);
+        const url = buildWhatsAppUrl(restaurant.whatsapp, message);
+
         window.open(url, "_blank", "noopener,noreferrer");
+
+        const confirmationData: OrderConfirmationData = {
+          customerName: order.customer.fullName,
+          itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+          total: order.total,
+          currency: order.currency,
+          whatsappUrl: url,
+        };
+
+        clearCart();
+        setSubmittedOrder(confirmationData);
       } catch {
         setError("Unable to generate order. Please try again.");
       }
     },
-    [items],
+    [items, clearCart],
   );
+
+  if (submittedOrder) {
+    return <OrderConfirmation order={submittedOrder} />;
+  }
 
   if (items.length === 0) {
     return <CartEmptyState />;

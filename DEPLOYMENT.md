@@ -4,7 +4,7 @@
 
 - **Project:** TastyBite Restaurant Website
 - **Framework:** Next.js 14 (App Router)
-- **Version:** v1.0.0
+- **Version:** v1.5.0
 - **Architecture:** Frontend-only (no backend, database, or authentication)
 
 ## Production Build
@@ -113,14 +113,14 @@ Requires Node.js 18.17+ on the server. Use a reverse proxy (nginx, Caddy) for HT
 
 ### Build Status
 
-| Check                | Result                 |
-| -------------------- | ---------------------- |
-| TypeScript           | PASS                   |
-| ESLint               | PASS                   |
-| Prettier             | PASS                   |
-| Unit/component tests | 208/208 PASS           |
-| Playwright E2E       | 54/54 PASS             |
-| Production build     | PASS (32 static pages) |
+| Check                | Result                  |
+| -------------------- | ----------------------- |
+| TypeScript           | PASS                    |
+| ESLint               | PASS                    |
+| Prettier             | PASS                    |
+| Unit/component tests | 230/230 PASS (34 files) |
+| Playwright E2E       | 60/60 PASS              |
+| Production build     | PASS (53 static pages)  |
 
 ### Critical User Journeys
 

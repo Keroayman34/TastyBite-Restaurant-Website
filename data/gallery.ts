@@ -22,7 +22,7 @@ export const galleryImages: GalleryImage[] = [
   },
   {
     id: "gal-4",
-    src: "/images/products/cheeseburger.jpg",
+    src: "/images/products/double-cheeseburger.jpg",
     alt: "Double cheeseburger with cheddar",
   },
   {

@@ -55,6 +55,8 @@ An internal design system preview is available at `/design-system` for developme
 
 ## Development
 
+Requires Node.js 18.17+ (Node 22 recommended).
+
 ```bash
 npm install
 npm run dev
@@ -72,4 +74,4 @@ npm run build
 
 ## Project Status
 
-Phase 2 — Design System & UI Foundation
+Phase 11 Complete — Production Ready (v1.5.0) (Frontend-only Phase 1 scope complete)
