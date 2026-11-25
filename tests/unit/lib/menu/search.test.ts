@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { searchProducts } from "@/lib/menu/search";
 import { products } from "@/data/products";
+import { getLocalizedText } from "@/domain/entities";
 
 describe("searchProducts", () => {
   it("returns all products for empty query", () => {
@@ -11,13 +12,13 @@ describe("searchProducts", () => {
   it("finds products by name (case-insensitive)", () => {
     const results = searchProducts(products, "margherita");
     expect(results.length).toBeGreaterThan(0);
-    expect(results[0].name).toContain("Margherita");
+    expect(getLocalizedText(results[0].name, "it")).toContain("Margherita");
   });
 
   it("finds products by description", () => {
     const results = searchProducts(products, "alfredo");
     expect(results.length).toBeGreaterThan(0);
-    expect(results[0].name).toContain("Alfredo");
+    expect(getLocalizedText(results[0].name, "it")).toContain("Alfredo");
   });
 
   it("finds products by tag", () => {

@@ -1,12 +1,14 @@
+import type { LocalizedField } from "./i18n";
+
 export interface ProductOptionChoice {
   id: string;
-  name: string;
+  name: LocalizedField;
   priceDelta: number;
 }
 
 export interface ProductOption {
   id: string;
-  name: string;
+  name: LocalizedField;
   required: boolean;
   multiple: boolean;
   choices: ProductOptionChoice[];
@@ -14,8 +16,8 @@ export interface ProductOption {
 
 export interface Product {
   id: string;
-  name: string;
-  description: string;
+  name: LocalizedField;
+  description: LocalizedField;
   categoryId: string;
   basePrice: number;
   image: string;

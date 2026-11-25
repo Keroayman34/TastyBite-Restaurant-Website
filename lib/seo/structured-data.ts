@@ -1,3 +1,4 @@
+import { getLocalizedText } from "@/domain/entities";
 import { restaurant } from "@/config/restaurant";
 
 export interface RestaurantStructuredData {
@@ -7,6 +8,7 @@ export interface RestaurantStructuredData {
   description: string;
   telephone: string;
   email: string;
+  priceRange: string;
   address: {
     "@type": string;
     streetAddress: string;
@@ -21,23 +23,27 @@ export interface RestaurantStructuredData {
 }
 
 export function getStructuredData(): RestaurantStructuredData {
+  const tagline = getLocalizedText(restaurant.tagline, "it");
   return {
     "@context": "https://schema.org",
     "@type": "Restaurant",
     name: restaurant.name,
-    description: `${restaurant.name} — ${restaurant.tagline}. ${restaurant.address}.`,
+    description: `${restaurant.name} — ${tagline}. ${restaurant.address}.`,
     telephone: restaurant.phone,
     email: restaurant.email,
+    priceRange: "€€",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "123 Flavor Street",
-      addressLocality: "Foodville",
-      addressRegion: "FV",
-      postalCode: "12345",
-      addressCountry: "US",
+      streetAddress: "Via del Corso 123",
+      addressLocality: "Roma",
+      addressRegion: "RM",
+      postalCode: "00186",
+      addressCountry: "IT",
     },
     servesCuisine: ["Pizza", "Burgers", "Chicken", "Pasta", "Salads", "Desserts"],
-    openingHours: restaurant.workingHours.map((h) => `${h.days}: ${h.hours}`),
+    openingHours: restaurant.workingHours.map(
+      (h) => `${getLocalizedText(h.days, "it")}: ${h.hours}`,
+    ),
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   };
 }

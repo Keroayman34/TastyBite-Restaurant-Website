@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { MenuClient } from "@/components/menu/MenuClient";
+import { MenuView } from "@/components/menu/MenuView";
+import { getDictionary } from "@/lib/i18n";
+
+const itSeo = getDictionary("it").seo;
 
 export const metadata: Metadata = {
-  title: "Menu",
-  description:
-    "Browse our full menu of delicious pizzas, burgers, chicken, pasta, salads, drinks, and desserts.",
+  title: itSeo.menuTitle,
+  description: itSeo.menuDescription,
 };
 
 export default function MenuPage({
@@ -14,16 +14,5 @@ export default function MenuPage({
 }: {
   searchParams: { category?: string };
 }) {
-  return (
-    <section className="section-spacing bg-surface-muted">
-      <Container className="flex flex-col gap-8">
-        <SectionHeading
-          eyebrow="TastyBite"
-          title="Our Menu"
-          description="Discover our delicious selection of meals made fresh every day."
-        />
-        <MenuClient initialCategory={searchParams.category ?? null} />
-      </Container>
-    </section>
-  );
+  return <MenuView initialCategory={searchParams.category ?? null} />;
 }

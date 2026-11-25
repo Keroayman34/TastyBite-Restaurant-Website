@@ -3,15 +3,30 @@ import type { Restaurant } from "@/domain/entities";
 export const restaurant: Restaurant = {
   id: "tastybite",
   name: "TastyBite",
-  tagline: "Bite into happiness",
+  tagline: {
+    it: "Mordi la felicità",
+    en: "Bite into happiness",
+  },
   logoUrl: "/images/logo.svg",
-  phone: "+1 (555) 123-4567",
-  whatsapp: "+15551234567",
-  email: "hello@tastybite.com",
-  address: "123 Flavor Street, Foodville, FV 12345",
+  phone: "+39 06 1234 5678",
+  whatsapp: "+390612345678",
+  email: "ciao@tastybite.it",
+  address: "Via del Corso 123, 00186 Roma RM, Italia",
   workingHours: [
-    { days: "Monday - Friday", hours: "10:00 AM - 11:00 PM" },
-    { days: "Saturday - Sunday", hours: "11:00 AM - 12:00 AM" },
+    {
+      days: {
+        it: "Lunedì - Venerdì",
+        en: "Monday - Friday",
+      },
+      hours: "11:00 - 23:00",
+    },
+    {
+      days: {
+        it: "Sabato - Domenica",
+        en: "Saturday - Sunday",
+      },
+      hours: "11:30 - 24:00",
+    },
   ],
   socialLinks: [
     { id: "instagram", platform: "instagram", url: "", active: false },
@@ -24,7 +39,8 @@ export const restaurant: Restaurant = {
       active: true,
     },
   ],
-  mapUrl: "https://maps.google.com/?q=123+Flavor+Street+Foodville",
-  currency: "EGP",
-  deliveryFee: 2.99,
+  mapUrl: "https://maps.google.com/?q=Via+del+Corso+123+Roma+Italia",
+  currency: "EUR",
+  deliveryFee: 2.5,
+  freeDeliveryThreshold: 25,
 };

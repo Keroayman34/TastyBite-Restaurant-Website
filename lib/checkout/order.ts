@@ -1,4 +1,9 @@
-import type { CartItem } from "@/domain/entities";
+import {
+  getLocalizedText,
+  type CartItem,
+  type CurrencyCode,
+  type LanguageCode,
+} from "@/domain/entities";
 import type {
   CheckoutCustomerInfo,
   WhatsAppOrderItem,
@@ -11,9 +16,9 @@ import {
 } from "@/lib/cart/cart-calculations";
 import { restaurant } from "@/config/restaurant";
 
-function getConfigurationString(item: CartItem): string {
+function getConfigurationString(item: CartItem, language: LanguageCode): string {
   return item.selectedOptions
-    .map((opt) => opt.choices.map((c) => c.name).join(", "))
+    .map((opt) => opt.choices.map((c) => getLocalizedText(c.name, language)).join(", "))
     .filter(Boolean)
     .join(" · ");
 }
@@ -21,11 +26,15 @@ function getConfigurationString(item: CartItem): string {
 export function buildWhatsAppOrderPayload(
   items: CartItem[],
   customer: CheckoutCustomerInfo,
+  options?: { language?: LanguageCode; currency?: CurrencyCode },
 ): WhatsAppOrderPayload {
+  const language = options?.language ?? "en";
+  const currency = options?.currency ?? restaurant.currency;
+
   const orderItems: WhatsAppOrderItem[] = items.map((item) => ({
-    name: item.product.name,
+    name: getLocalizedText(item.product.name, language),
     quantity: item.quantity,
-    configuration: getConfigurationString(item),
+    configuration: getConfigurationString(item, language),
     unitPrice: item.unitPrice,
     subtotal: item.subtotal,
   }));
@@ -40,6 +49,7 @@ export function buildWhatsAppOrderPayload(
     subtotal,
     deliveryFee,
     total,
-    currency: restaurant.currency,
+    currency,
+    language,
   };
 }

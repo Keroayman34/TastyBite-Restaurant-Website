@@ -3,18 +3,36 @@ import type { Location } from "@/domain/entities";
 export const locations: Location[] = [
   {
     id: "loc-downtown",
-    name: "TastyBite Downtown",
-    address: "123 Flavor Street, Foodville, FV 12345",
-    phone: "+1 (555) 123-4567",
-    workingHours: "Mon-Fri: 10:00 AM - 11:00 PM",
-    mapUrl: "https://maps.google.com/?q=123+Flavor+Street+Foodville",
+    name: {
+      it: "TastyBite Roma Centro",
+      en: "TastyBite Rome Center",
+    },
+    address: {
+      it: "Via del Corso 123, 00186 Roma RM, Italia",
+      en: "Via del Corso 123, 00186 Rome, Italy",
+    },
+    phone: "+39 06 1234 5678",
+    workingHours: {
+      it: "Lun-Ven: 11:00 - 23:00 | Sab-Dom: 11:30 - 24:00",
+      en: "Mon-Fri: 11:00 AM - 11:00 PM | Sat-Sun: 11:30 AM - 12:00 AM",
+    },
+    mapUrl: "https://maps.google.com/?q=Via+del+Corso+123+Roma+Italia",
   },
   {
     id: "loc-riverside",
-    name: "TastyBite Riverside",
-    address: "456 Riverside Avenue, Foodville, FV 67890",
-    phone: "+1 (555) 987-6543",
-    workingHours: "Mon-Sun: 11:00 AM - 12:00 AM",
-    mapUrl: "https://maps.google.com/?q=456+Riverside+Avenue+Foodville",
+    name: {
+      it: "TastyBite Milano Navigli",
+      en: "TastyBite Milan Navigli",
+    },
+    address: {
+      it: "Alzaia Naviglio Grande 48, 20144 Milano MI, Italia",
+      en: "Alzaia Naviglio Grande 48, 20144 Milan, Italy",
+    },
+    phone: "+39 02 9876 5432",
+    workingHours: {
+      it: "Lun-Dom: 11:30 - 24:00",
+      en: "Mon-Sun: 11:30 AM - 12:00 AM",
+    },
+    mapUrl: "https://maps.google.com/?q=Alzaia+Naviglio+Grande+48+Milano+Italia",
   },
 ];

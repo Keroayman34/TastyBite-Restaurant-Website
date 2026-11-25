@@ -1,9 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
-import { formatPrice } from "@/lib/format";
-import { restaurant } from "@/config/restaurant";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 import { ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/domain/entities";
@@ -13,6 +14,10 @@ interface MenuProductCardProps {
 }
 
 export function MenuProductCard({ product }: MenuProductCardProps) {
+  const { t, formatPrice, localize } = usePreferences();
+  const name = localize(product.name);
+  const description = localize(product.description);
+
   return (
     <Link href={`/menu/${product.id}`} className="group block h-full">
       <Card
@@ -26,7 +31,7 @@ export function MenuProductCard({ product }: MenuProductCardProps) {
         <div className="relative h-[65%] shrink-0 overflow-hidden bg-charcoal-50">
           <ImageWithFallback
             src={product.image}
-            alt={product.name}
+            alt={name}
             unoptimized
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -34,18 +39,18 @@ export function MenuProductCard({ product }: MenuProductCardProps) {
           />
           {product.tags.includes("popular") ? (
             <Badge variant="brand" className="absolute left-3 top-3">
-              Popular
+              {t.menu.badgePopular}
             </Badge>
           ) : null}
           {product.tags.includes("new") ? (
             <Badge variant="success" className="absolute left-3 top-3">
-              New
+              {t.menu.badgeNew}
             </Badge>
           ) : null}
           {!product.available ? (
             <div className="absolute inset-0 flex items-center justify-center bg-charcoal-900/40">
               <span className="rounded-full bg-charcoal-900 px-3 py-1 text-caption font-semibold text-white">
-                Unavailable
+                {t.menu.unavailable}
               </span>
             </div>
           ) : null}
@@ -53,19 +58,17 @@ export function MenuProductCard({ product }: MenuProductCardProps) {
 
         <div className="flex h-[35%] flex-col gap-2 p-5">
           <h3 className="text-h4 text-foreground transition-colors group-hover:text-primary-600">
-            {product.name}
+            {name}
           </h3>
-          <p className="line-clamp-2 text-body-sm text-foreground-muted">
-            {product.description}
-          </p>
+          <p className="line-clamp-2 text-body-sm text-foreground-muted">{description}</p>
           <div className="mt-auto flex items-center justify-between">
             <p className="text-body font-semibold text-primary-600">
-              {formatPrice(product.basePrice, restaurant.currency)}
+              {formatPrice(product.basePrice)}
             </p>
             <button
               type="button"
               disabled={!product.available}
-              aria-label={`Add ${product.name} to cart`}
+              aria-label={t.menu.addToCartAria.replace("{name}", name)}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-500 text-white transition-colors hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ShoppingCart className="h-4 w-4" />

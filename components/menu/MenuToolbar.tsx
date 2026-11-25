@@ -3,13 +3,7 @@
 import { Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { SortOption } from "@/lib/menu";
-
-const sortOptions: { value: SortOption; label: string }[] = [
-  { value: "featured", label: "Featured" },
-  { value: "price-asc", label: "Price: Low to High" },
-  { value: "price-desc", label: "Price: High to Low" },
-  { value: "name-asc", label: "Name: A-Z" },
-];
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 interface MenuToolbarProps {
   search: string;
@@ -24,6 +18,15 @@ export function MenuToolbar({
   sort,
   onSortChange,
 }: MenuToolbarProps) {
+  const { t } = usePreferences();
+
+  const sortOptions: { value: SortOption; label: string }[] = [
+    { value: "featured", label: t.menu.sortFeatured },
+    { value: "price-asc", label: t.menu.sortPriceAsc },
+    { value: "price-desc", label: t.menu.sortPriceDesc },
+    { value: "name-asc", label: t.menu.sortNameAsc },
+  ];
+
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <div className="relative flex-1">
@@ -32,15 +35,15 @@ export function MenuToolbar({
           type="search"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search for pizza, burger..."
-          aria-label="Search products"
+          placeholder={t.menu.searchPlaceholder}
+          aria-label={t.menu.searchAria}
           className="h-11 w-full rounded-input border border-border bg-surface pl-10 pr-4 text-body text-foreground transition-colors placeholder:text-foreground-subtle focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
         />
       </div>
 
       <div className="relative">
         <label htmlFor="sort-select" className="sr-only">
-          Sort products
+          {t.menu.sortAria}
         </label>
         <select
           id="sort-select"

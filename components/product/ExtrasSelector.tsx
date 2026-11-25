@@ -2,8 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import type { ProductOption, ProductOptionChoice } from "@/domain/entities";
-import { formatPrice } from "@/lib/format";
-import { restaurant } from "@/config/restaurant";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 interface ExtrasSelectorProps {
   option: ProductOption;
@@ -12,9 +11,13 @@ interface ExtrasSelectorProps {
 }
 
 export function ExtrasSelector({ option, selected, onToggle }: ExtrasSelectorProps) {
+  const { formatPrice, localize } = usePreferences();
+
   return (
     <fieldset className="flex flex-col gap-3">
-      <legend className="text-label font-semibold text-foreground">{option.name}</legend>
+      <legend className="text-label font-semibold text-foreground">
+        {localize(option.name)}
+      </legend>
       <div className="flex flex-wrap gap-2">
         {option.choices.map((choice) => {
           const isSelected = selected.some((s) => s.id === choice.id);
@@ -33,9 +36,9 @@ export function ExtrasSelector({ option, selected, onToggle }: ExtrasSelectorPro
                   : "border-border-strong bg-surface text-foreground-muted hover:border-primary-300 hover:text-foreground",
               )}
             >
-              {choice.name}
+              {localize(choice.name)}
               <span className="ml-1 text-caption text-foreground-subtle">
-                +{formatPrice(choice.priceDelta, restaurant.currency)}
+                +{formatPrice(choice.priceDelta)}
               </span>
             </button>
           );

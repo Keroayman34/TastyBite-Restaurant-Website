@@ -6,24 +6,24 @@ describe("CategoriesSection", () => {
   it("renders section heading", () => {
     render(<CategoriesSection />);
     expect(
-      screen.getByRole("heading", { level: 2, name: "Browse by Category" }),
+      screen.getByRole("heading", { level: 2, name: "Esplora per Categoria" }),
     ).toBeInTheDocument();
   });
 
   it("renders all category cards", () => {
     render(<CategoriesSection />);
-    expect(screen.getByText("Pizza")).toBeInTheDocument();
-    expect(screen.getByText("Burgers")).toBeInTheDocument();
-    expect(screen.getByText("Chicken")).toBeInTheDocument();
+    expect(screen.getByText("Pizze")).toBeInTheDocument();
+    expect(screen.getByText("Burger")).toBeInTheDocument();
+    expect(screen.getByText("Pollo")).toBeInTheDocument();
     expect(screen.getByText("Pasta")).toBeInTheDocument();
-    expect(screen.getByText("Salads")).toBeInTheDocument();
-    expect(screen.getByText("Drinks")).toBeInTheDocument();
-    expect(screen.getByText("Desserts")).toBeInTheDocument();
+    expect(screen.getByText("Insalate")).toBeInTheDocument();
+    expect(screen.getByText("Bevande")).toBeInTheDocument();
+    expect(screen.getByText("Dolci")).toBeInTheDocument();
   });
 
   it("renders category links", () => {
     render(<CategoriesSection />);
-    const pizzaLink = screen.getByRole("link", { name: /Pizza/i });
+    const pizzaLink = screen.getByRole("link", { name: /Pizze/i });
     expect(pizzaLink).toHaveAttribute("href", "/menu?category=pizza");
   });
 });

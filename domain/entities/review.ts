@@ -1,8 +1,10 @@
+import type { LocalizedField } from "./i18n";
+
 export interface Review {
   id: string;
   customerName: string;
   rating: number;
-  comment: string;
+  comment: LocalizedField;
   date: string;
   avatar: string;
 }

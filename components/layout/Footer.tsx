@@ -1,10 +1,15 @@
+"use client";
+
 import { restaurant } from "@/config/restaurant";
 import { footerLinks } from "@/config/navigation";
 import { Container } from "@/components/ui/Container";
 import { SocialIcon } from "@/components/layout/SocialIcon";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 import { MapPin, Mail, Phone } from "lucide-react";
 
 export function Footer() {
+  const { t, localize } = usePreferences();
+
   return (
     <footer className="border-t border-border bg-surface-muted">
       <Container className="flex flex-col gap-10 py-12">
@@ -18,7 +23,9 @@ export function Footer() {
                 {restaurant.name}
               </span>
             </div>
-            <p className="text-body-sm text-foreground-muted">{restaurant.tagline}</p>
+            <p className="text-body-sm text-foreground-muted">
+              {localize(restaurant.tagline)}
+            </p>
             <div className="flex items-center gap-2">
               {restaurant.socialLinks.map((link) =>
                 link.active ? (
@@ -36,7 +43,10 @@ export function Footer() {
                   <button
                     key={link.id}
                     type="button"
-                    aria-label={`${link.platform} (coming soon)`}
+                    aria-label={t.footer.socialComingSoon.replace(
+                      "{platform}",
+                      link.platform,
+                    )}
                     className="flex h-9 w-9 cursor-default items-center justify-center rounded-full border border-border-strong text-foreground-muted/50"
                   >
                     <SocialIcon platform={link.platform} />
@@ -47,22 +57,22 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-h4 text-foreground">Quick Links</h3>
-            <nav className="flex flex-col gap-2" aria-label="Footer">
+            <h3 className="text-h4 text-foreground">{t.footer.quickLinks}</h3>
+            <nav className="flex flex-col gap-2" aria-label={t.nav.footerAria}>
               {footerLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   className="text-body-sm text-foreground-muted transition-colors hover:text-primary-600"
                 >
-                  {link.label}
+                  {t.nav[link.key]}
                 </a>
               ))}
             </nav>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-h4 text-foreground">Contact</h3>
+            <h3 className="text-h4 text-foreground">{t.footer.contact}</h3>
             <div className="flex flex-col gap-3 text-body-sm text-foreground-muted">
               <a
                 href={`mailto:${restaurant.email}`}
@@ -86,11 +96,13 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-h4 text-foreground">Working Hours</h3>
+            <h3 className="text-h4 text-foreground">{t.footer.workingHours}</h3>
             <div className="flex flex-col gap-2 text-body-sm text-foreground-muted">
-              {restaurant.workingHours.map((schedule) => (
-                <div key={schedule.days} className="flex flex-col">
-                  <span className="font-medium text-foreground">{schedule.days}</span>
+              {restaurant.workingHours.map((schedule, index) => (
+                <div key={index} className="flex flex-col">
+                  <span className="font-medium text-foreground">
+                    {localize(schedule.days)}
+                  </span>
                   <span>{schedule.hours}</span>
                 </div>
               ))}
@@ -100,9 +112,12 @@ export function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <p className="text-caption text-foreground-subtle">
-            &copy; {new Date().getFullYear()} {restaurant.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {restaurant.name}.{" "}
+            {t.common.allRightsReserved}
           </p>
-          <p className="text-caption text-foreground-subtle">{restaurant.tagline}</p>
+          <p className="text-caption text-foreground-subtle">
+            {localize(restaurant.tagline)}
+          </p>
         </div>
       </Container>
     </footer>

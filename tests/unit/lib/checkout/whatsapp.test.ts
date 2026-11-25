@@ -138,6 +138,6 @@ describe("buildWhatsAppUrl", () => {
     const url = buildWhatsAppUrl(restaurant.whatsapp, "Test Order");
     const cleanedRestaurantPhone = restaurant.whatsapp.replace(/[^\d]/g, "");
     expect(url).toContain(`wa.me/${cleanedRestaurantPhone}`);
-    expect(cleanedRestaurantPhone).toBe("15551234567");
+    expect(cleanedRestaurantPhone).toBe("390612345678");
   });
 });

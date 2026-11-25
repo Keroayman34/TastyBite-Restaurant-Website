@@ -3,8 +3,8 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CheckoutPage } from "@/components/checkout/CheckoutPage";
 import { renderWithCart } from "@/tests/helpers";
-import { serializeCart, getCartStorageKey } from "@/lib/cart";
-import { writeStorage } from "@/services/storage/local-storage";
+import { serializeCart, deserializeCart, getCartStorageKey } from "@/lib/cart";
+import { readStorage, writeStorage } from "@/services/storage/local-storage";
 import { restaurant } from "@/config/restaurant";
 import type { CartItem } from "@/domain/entities";
 
@@ -12,21 +12,24 @@ const sampleItem: CartItem = {
   id: "test-item-1",
   product: {
     id: "prod-margherita-pizza",
-    name: "Margherita Pizza",
-    description: "Fresh tomato sauce, mozzarella, basil",
+    name: { it: "Pizza Margherita", en: "Margherita Pizza" },
+    description: {
+      it: "Salsa di pomodoro fresco, mozzarella fior di latte e basilico",
+      en: "Fresh tomato sauce, mozzarella, basil",
+    },
     categoryId: "cat-pizza",
-    basePrice: 150,
+    basePrice: 7.0,
     image: "/images/products/margherita-pizza.jpg",
     available: true,
     tags: ["popular", "veggie"],
-    rating: 4.8,
-    reviewCount: 142,
+    rating: 4.5,
+    reviewCount: 96,
     options: [],
   },
   quantity: 2,
   selectedOptions: [],
-  unitPrice: 150,
-  subtotal: 300,
+  unitPrice: 7.0,
+  subtotal: 14.0,
 };
 
 describe("CheckoutPage", () => {
@@ -38,7 +41,7 @@ describe("CheckoutPage", () => {
   it("renders empty cart state when cart has no items", () => {
     renderWithCart(<CheckoutPage />);
     expect(
-      screen.getByRole("heading", { name: /Your Cart is Empty/i }),
+      screen.getByRole("heading", { name: /Il tuo carrello è vuoto/i }),
     ).toBeInTheDocument();
   });
 
@@ -47,10 +50,12 @@ describe("CheckoutPage", () => {
 
     renderWithCart(<CheckoutPage />);
     expect(
-      screen.getByRole("heading", { name: /Customer Information/i }),
+      screen.getByRole("heading", { name: /Dati del Cliente/i }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /Order Summary/i })).toBeInTheDocument();
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Riepilogo Ordine/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
   });
 
   it("submits order to restaurant.whatsapp, clears cart, and shows confirmation", async () => {
@@ -61,36 +66,38 @@ describe("CheckoutPage", () => {
 
     renderWithCart(<CheckoutPage />);
 
-    await user.type(screen.getByLabelText(/Full Name/i), "Karim Gamal");
-    await user.type(screen.getByLabelText(/Phone Number/i), "+20 100 123 4567");
-    await user.type(screen.getByLabelText(/Address/i), "12 Nile Corniche, Maadi, Cairo");
-    await user.type(screen.getByLabelText(/Notes/i), "Ring the bell please");
+    await user.type(screen.getByLabelText(/Nome e Cognome/i), "Marco Rossi");
+    await user.type(screen.getByLabelText(/Numero di Telefono/i), "+39 333 123 4567");
+    await user.type(
+      screen.getByLabelText(/Indirizzo di Consegna/i),
+      "Via del Corso 10, Roma",
+    );
+    await user.type(screen.getByLabelText(/Note/i), "Suonare al citofono 3");
 
-    await user.click(screen.getByRole("button", { name: /Confirm Order via WhatsApp/i }));
+    await user.click(
+      screen.getByRole("button", { name: /Conferma Ordine via WhatsApp/i }),
+    );
 
     expect(windowOpenSpy).toHaveBeenCalledTimes(1);
     const openedUrl = windowOpenSpy.mock.calls[0][0] as string;
 
     const cleanedRestaurantPhone = restaurant.whatsapp.replace(/[^\d]/g, "");
     expect(openedUrl).toContain(`wa.me/${cleanedRestaurantPhone}`);
-    expect(openedUrl).toContain(encodeURIComponent("Karim Gamal"));
-    expect(openedUrl).toContain(encodeURIComponent("Ring the bell please"));
+    expect(openedUrl).toContain(encodeURIComponent("Marco Rossi"));
+    expect(openedUrl).toContain(encodeURIComponent("Suonare al citofono 3"));
 
-    // Verify confirmation view is displayed
     expect(
-      await screen.findByRole("heading", { name: /Order Placed Successfully/i }),
+      await screen.findByRole("heading", { name: /Ordine Inviato con Successo/i }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Karim Gamal", { selector: "span" })).toBeInTheDocument();
+    expect(screen.getByText("Marco Rossi", { selector: "span" })).toBeInTheDocument();
 
-    // Verify fallback WhatsApp button is present with restaurant link
-    const whatsappLink = screen.getByRole("link", { name: /Open WhatsApp Again/i });
+    const whatsappLink = screen.getByRole("link", { name: /Riapri WhatsApp/i });
     expect(whatsappLink).toHaveAttribute("href", openedUrl);
 
-    // Verify localStorage cart is empty
-    const saved = localStorage.getItem("tastybite_cart");
+    const saved = readStorage<string>(getCartStorageKey());
     if (saved) {
-      const parsed = JSON.parse(saved);
-      expect(parsed.items).toHaveLength(0);
+      const parsed = deserializeCart(saved);
+      expect(parsed?.items ?? []).toHaveLength(0);
     }
   });
 });

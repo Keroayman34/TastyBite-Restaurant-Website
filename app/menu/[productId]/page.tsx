@@ -5,6 +5,8 @@ import { Breadcrumb } from "@/components/product/Breadcrumb";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { products } from "@/data/products";
 import { categories } from "@/data/categories";
+import { getLocalizedText } from "@/domain/entities";
+import { getDictionary } from "@/lib/i18n";
 import { getBreadcrumbStructuredData } from "@/lib/seo/structured-data";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -23,25 +25,27 @@ export async function generateMetadata({
   const product = products.find((p) => p.id === params.productId);
 
   if (!product) {
-    return { title: "Product Not Found" };
+    return { title: "Prodotto Non Trovato" };
   }
 
   const productUrl = `${baseUrl}/menu/${product.id}`;
+  const title = getLocalizedText(product.name, "it");
+  const description = getLocalizedText(product.description, "it");
 
   return {
-    title: product.name,
-    description: product.description,
+    title,
+    description,
     openGraph: {
-      title: product.name,
-      description: product.description,
+      title,
+      description,
       url: productUrl,
       type: "website",
       images: [{ url: product.image }],
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
-      description: product.description,
+      title,
+      description,
     },
     alternates: {
       canonical: productUrl,
@@ -57,17 +61,30 @@ export default function ProductDetailPage({ params }: { params: { productId: str
   }
 
   const category = categories.find((c) => c.id === product.categoryId);
+  const itProduct = getDictionary("it").product;
+  const enProduct = getDictionary("en").product;
 
   const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Menu", href: "/menu" },
+    {
+      label: { it: itProduct.breadcrumbHome, en: enProduct.breadcrumbHome },
+      href: "/",
+    },
+    {
+      label: { it: itProduct.breadcrumbMenu, en: enProduct.breadcrumbMenu },
+      href: "/menu",
+    },
     ...(category
       ? [{ label: category.name, href: `/menu?category=${category.slug}` }]
       : []),
     { label: product.name, href: `/menu/${product.id}` },
   ];
 
-  const breadcrumbSchema = getBreadcrumbStructuredData(breadcrumbItems);
+  const schemaItems = breadcrumbItems.map((item) => ({
+    label: getLocalizedText(item.label, "it"),
+    href: item.href,
+  }));
+
+  const breadcrumbSchema = getBreadcrumbStructuredData(schemaItems);
 
   return (
     <section className="section-spacing bg-surface-muted">

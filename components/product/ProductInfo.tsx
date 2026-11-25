@@ -1,6 +1,7 @@
+"use client";
+
 import { Star } from "lucide-react";
-import { formatPrice } from "@/lib/format";
-import { restaurant } from "@/config/restaurant";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 import type { Product } from "@/domain/entities";
 
 interface ProductInfoProps {
@@ -9,14 +10,16 @@ interface ProductInfoProps {
 }
 
 export function ProductInfo({ product, price }: ProductInfoProps) {
+  const { t, formatPrice, localize } = usePreferences();
+
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-h1 text-foreground">{product.name}</h1>
+      <h1 className="text-h1 text-foreground">{localize(product.name)}</h1>
 
       <div className="flex items-center gap-2">
         <div
           className="flex items-center gap-0.5"
-          aria-label={`Rating: ${product.rating} out of 5`}
+          aria-label={t.product.ratingAria.replace("{rating}", String(product.rating))}
         >
           {Array.from({ length: 5 }).map((_, i) => (
             <Star
@@ -32,15 +35,13 @@ export function ProductInfo({ product, price }: ProductInfoProps) {
         </div>
         <span className="text-body-sm font-medium text-foreground">{product.rating}</span>
         <span className="text-body-sm text-foreground-muted">
-          ({product.reviewCount} reviews)
+          {t.product.reviewsCount.replace("{count}", String(product.reviewCount))}
         </span>
       </div>
 
-      <p className="text-body text-foreground-muted">{product.description}</p>
+      <p className="text-body text-foreground-muted">{localize(product.description)}</p>
 
-      <p className="text-h2 font-bold text-primary-600">
-        {formatPrice(price, restaurant.currency)}
-      </p>
+      <p className="text-h2 font-bold text-primary-600">{formatPrice(price)}</p>
     </div>
   );
 }

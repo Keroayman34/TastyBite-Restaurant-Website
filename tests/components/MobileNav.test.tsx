@@ -6,23 +6,23 @@ import { MobileNav } from "@/components/layout/MobileNav";
 describe("MobileNav", () => {
   it("renders hamburger button", () => {
     render(<MobileNav />);
-    expect(screen.getByRole("button", { name: "Open menu" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Apri menu" })).toBeInTheDocument();
   });
 
   it("opens menu on click", async () => {
     const user = userEvent.setup();
     render(<MobileNav />);
-    await user.click(screen.getByRole("button", { name: "Open menu" }));
-    expect(screen.getByRole("button", { name: "Close menu" })).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Apri menu" }));
+    expect(screen.getByRole("button", { name: "Chiudi menu" })).toBeInTheDocument();
   });
 
   it("sets aria-expanded correctly", async () => {
     const user = userEvent.setup();
     render(<MobileNav />);
-    const button = screen.getByRole("button", { name: "Open menu" });
+    const button = screen.getByRole("button", { name: "Apri menu" });
     expect(button).toHaveAttribute("aria-expanded", "false");
     await user.click(button);
-    expect(screen.getByRole("button", { name: "Close menu" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Chiudi menu" })).toHaveAttribute(
       "aria-expanded",
       "true",
     );
@@ -31,7 +31,7 @@ describe("MobileNav", () => {
   it("renders navigation links when open", async () => {
     const user = userEvent.setup();
     render(<MobileNav />);
-    await user.click(screen.getByRole("button", { name: "Open menu" }));
+    await user.click(screen.getByRole("button", { name: "Apri menu" }));
     expect(screen.getAllByRole("link", { name: "Home" }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: "Menu" }).length).toBeGreaterThan(0);
   });
@@ -39,8 +39,8 @@ describe("MobileNav", () => {
   it("closes menu when link is clicked", async () => {
     const user = userEvent.setup();
     render(<MobileNav />);
-    await user.click(screen.getByRole("button", { name: "Open menu" }));
+    await user.click(screen.getByRole("button", { name: "Apri menu" }));
     await user.click(screen.getByRole("link", { name: "Home" }));
-    expect(screen.getByRole("button", { name: "Open menu" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Apri menu" })).toBeInTheDocument();
   });
 });

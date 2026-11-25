@@ -3,8 +3,7 @@
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { IconButton } from "@/components/ui/IconButton";
-import { formatPrice } from "@/lib/format";
-import { restaurant } from "@/config/restaurant";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 import { MIN_QUANTITY } from "@/lib/menu/pricing";
 import type { CartItem as CartItemType } from "@/domain/entities";
 
@@ -15,22 +14,20 @@ interface CartItemProps {
   onRemove: () => void;
 }
 
-function getCustomizationSummary(item: CartItemType): string {
-  return item.selectedOptions
-    .map((opt) => opt.choices.map((c) => c.name).join(", "))
+export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemProps) {
+  const { t, formatPrice, localize } = usePreferences();
+  const productName = localize(item.product.name);
+  const customization = item.selectedOptions
+    .map((opt) => opt.choices.map((c) => localize(c.name)).join(", "))
     .filter(Boolean)
     .join(" · ");
-}
-
-export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemProps) {
-  const customization = getCustomizationSummary(item);
 
   return (
     <div className="flex gap-4 rounded-card border border-border bg-surface p-4 shadow-card">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-image bg-charcoal-50">
         <ImageWithFallback
           src={item.product.image}
-          alt={item.product.name}
+          alt={productName}
           unoptimized
           fill
           className="object-cover"
@@ -41,15 +38,13 @@ export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemP
       <div className="flex flex-1 flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col gap-0.5">
-            <h3 className="text-body font-semibold text-foreground">
-              {item.product.name}
-            </h3>
+            <h3 className="text-body font-semibold text-foreground">{productName}</h3>
             {customization ? (
               <p className="text-caption text-foreground-muted">{customization}</p>
             ) : null}
           </div>
           <IconButton
-            label={`Remove ${item.product.name} from cart`}
+            label={t.cart.removeItemAria.replace("{name}", productName)}
             onClick={onRemove}
             variant="outline"
             size="sm"
@@ -61,7 +56,7 @@ export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemP
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <IconButton
-              label="Decrease quantity"
+              label={t.product.decreaseQty}
               onClick={onDecrement}
               disabled={item.quantity <= MIN_QUANTITY}
               variant="outline"
@@ -72,12 +67,12 @@ export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemP
             <span
               className="min-w-8 text-center text-body-sm font-medium text-foreground"
               aria-live="polite"
-              aria-label={`Quantity: ${item.quantity}`}
+              aria-label={t.product.quantityLabel.replace("{qty}", String(item.quantity))}
             >
               {item.quantity}
             </span>
             <IconButton
-              label="Increase quantity"
+              label={t.product.increaseQty}
               onClick={onIncrement}
               variant="outline"
               size="sm"
@@ -87,7 +82,7 @@ export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemP
           </div>
 
           <p className="text-body font-semibold text-primary-600">
-            {formatPrice(item.subtotal, restaurant.currency)}
+            {formatPrice(item.subtotal)}
           </p>
         </div>
       </div>

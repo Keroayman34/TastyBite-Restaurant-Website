@@ -10,9 +10,8 @@ import { ExtrasSelector } from "@/components/product/ExtrasSelector";
 import { QuantitySelector } from "@/components/product/QuantitySelector";
 import { Button } from "@/components/ui/Button";
 import { useCart } from "@/components/cart/CartContext";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 import { calculateProductPrice, findOption, MIN_QUANTITY } from "@/lib/menu/pricing";
-import { formatPrice } from "@/lib/format";
-import { restaurant } from "@/config/restaurant";
 import type { Product, ProductOptionChoice, CartItem } from "@/domain/entities";
 
 interface ProductDetailsProps {
@@ -21,6 +20,8 @@ interface ProductDetailsProps {
 
 export function ProductDetails({ product }: ProductDetailsProps) {
   const { addItem } = useCart();
+  const { t, formatPrice } = usePreferences();
+
   const sizeOption = findOption(product, "opt-size");
   const crustOption = findOption(product, "opt-crust");
   const extrasOption = findOption(product, "opt-extras");
@@ -145,9 +146,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           <QuantitySelector quantity={quantity} onChange={setQuantity} />
 
           <div className="flex flex-col gap-1">
-            <span className="text-caption text-foreground-subtle">Subtotal</span>
+            <span className="text-caption text-foreground-subtle">
+              {t.product.subtotal}
+            </span>
             <span className="text-h3 font-bold text-foreground">
-              {formatPrice(pricing.subtotal, restaurant.currency)}
+              {formatPrice(pricing.subtotal)}
             </span>
           </div>
         </div>
@@ -162,20 +165,18 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           {added ? (
             <>
               <Check className="h-5 w-5" />
-              Added to Cart
+              {t.product.addedToCart}
             </>
           ) : (
             <>
               <ShoppingCart className="h-5 w-5" />
-              Add to Cart — {formatPrice(pricing.subtotal, restaurant.currency)}
+              {t.product.addToCart} — {formatPrice(pricing.subtotal)}
             </>
           )}
         </Button>
 
         {!product.available ? (
-          <p className="text-body-sm text-error-600">
-            This product is currently unavailable.
-          </p>
+          <p className="text-body-sm text-error-600">{t.product.unavailableMsg}</p>
         ) : null}
       </div>
     </div>

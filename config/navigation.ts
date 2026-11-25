@@ -1,23 +1,28 @@
+import type { TranslationDictionary } from "@/lib/i18n";
+
 export interface NavLink {
-  label: string;
+  key: keyof Pick<
+    TranslationDictionary["nav"],
+    "home" | "menu" | "about" | "offers" | "contact" | "locations" | "reviews" | "gallery"
+  >;
   href: string;
 }
 
 export const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "Menu", href: "/menu" },
-  { label: "About", href: "/about" },
-  { label: "Offers", href: "/offers" },
-  { label: "Contact", href: "/contact" },
+  { key: "home", href: "/" },
+  { key: "menu", href: "/menu" },
+  { key: "about", href: "/about" },
+  { key: "offers", href: "/offers" },
+  { key: "contact", href: "/contact" },
 ];
 
 export const footerLinks: NavLink[] = [
-  { label: "Home", href: "/" },
-  { label: "Menu", href: "/menu" },
-  { label: "About", href: "/about" },
-  { label: "Offers", href: "/offers" },
-  { label: "Contact", href: "/contact" },
-  { label: "Locations", href: "/locations" },
-  { label: "Reviews", href: "/reviews" },
-  { label: "Gallery", href: "/gallery" },
+  { key: "home", href: "/" },
+  { key: "menu", href: "/menu" },
+  { key: "about", href: "/about" },
+  { key: "offers", href: "/offers" },
+  { key: "contact", href: "/contact" },
+  { key: "locations", href: "/locations" },
+  { key: "reviews", href: "/reviews" },
+  { key: "gallery", href: "/gallery" },
 ];

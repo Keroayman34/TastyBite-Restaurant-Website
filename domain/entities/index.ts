@@ -1,3 +1,12 @@
+export type {
+  LanguageCode,
+  CurrencyCode,
+  LocalizedText,
+  LocalizedField,
+} from "./i18n";
+export { getLocalizedText } from "./i18n";
+export type { LanguageCode, CurrencyCode, LocalizedText, LocalizedField } from "./i18n";
+export { getLocalizedText } from "./i18n";
 export type { SocialLink, SocialPlatform } from "./social-link";
 export type { Restaurant, WorkingHours } from "./restaurant";
 export type { Category } from "./category";

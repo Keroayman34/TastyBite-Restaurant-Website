@@ -1,19 +1,14 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/Container";
-import { CartPage } from "@/components/cart/CartPage";
+import { CartRouteView } from "@/components/cart/CartRouteView";
+import { getDictionary } from "@/lib/i18n";
+
+const itSeo = getDictionary("it").seo;
 
 export const metadata: Metadata = {
-  title: "Cart",
-  description: "Review your cart items, adjust quantities, and see your order total.",
+  title: itSeo.cartTitle,
+  description: itSeo.cartDescription,
 };
 
 export default function CartRoute() {
-  return (
-    <section className="section-spacing bg-surface-muted">
-      <Container className="flex flex-col gap-8">
-        <h1 className="text-h1 text-foreground">Your Cart</h1>
-        <CartPage />
-      </Container>
-    </section>
-  );
+  return <CartRouteView />;
 }

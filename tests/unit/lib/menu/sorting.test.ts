@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { sortProducts } from "@/lib/menu/sorting";
 import { products } from "@/data/products";
+import { getLocalizedText } from "@/domain/entities";
 
 describe("sortProducts", () => {
   it("sorts by price low to high", () => {
@@ -20,7 +21,9 @@ describe("sortProducts", () => {
   it("sorts by name A-Z", () => {
     const sorted = sortProducts(products, "name-asc");
     for (let i = 1; i < sorted.length; i++) {
-      expect(sorted[i].name.localeCompare(sorted[i - 1].name)).toBeGreaterThanOrEqual(0);
+      const curr = getLocalizedText(sorted[i].name, "it");
+      const prev = getLocalizedText(sorted[i - 1].name, "it");
+      expect(curr.localeCompare(prev, "it")).toBeGreaterThanOrEqual(0);
     }
   });
 

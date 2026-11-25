@@ -1,15 +1,36 @@
+"use client";
+
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
+import { restaurant } from "@/config/restaurant";
 import { Clock, Truck, BadgeCheck } from "lucide-react";
 
-const benefits = [
-  { icon: Clock, label: "Fast Delivery", description: "30 min or less" },
-  { icon: BadgeCheck, label: "Fresh Ingredients", description: "Quality guaranteed" },
-  { icon: Truck, label: "Free Delivery", description: "On orders over $25" },
-];
-
 export function Hero() {
+  const { t, formatPrice } = usePreferences();
+
+  const benefits = [
+    {
+      icon: Clock,
+      label: t.hero.benefitFastDelivery,
+      description: t.hero.benefitFastDeliveryDesc,
+    },
+    {
+      icon: BadgeCheck,
+      label: t.hero.benefitFreshIngredients,
+      description: t.hero.benefitFreshIngredientsDesc,
+    },
+    {
+      icon: Truck,
+      label: t.hero.benefitFreeDelivery,
+      description: t.hero.benefitFreeDeliveryDesc.replace(
+        "{threshold}",
+        formatPrice(restaurant.freeDeliveryThreshold),
+      ),
+    },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-charcoal-900">
       <div
@@ -30,22 +51,19 @@ export function Hero() {
       <Container className="relative flex min-h-[60vh] flex-col justify-center py-20 lg:min-h-[70vh]">
         <div className="flex max-w-xl flex-col items-start gap-6">
           <Badge variant="brand" className="bg-primary-500/10 text-primary-300">
-            #1 Restaurant in Town
+            {t.hero.badge}
           </Badge>
 
           <h1 className="text-display text-white">
-            Delicious Food,
-            <span className="text-primary-400"> Delivered Fast</span>
+            {t.hero.titleLine1}{" "}
+            <span className="text-primary-400">{t.hero.titleHighlight}</span>
           </h1>
 
-          <p className="text-body-lg text-white/70">
-            From juicy burgers to wood-fired pizzas, we prepare every meal with fresh
-            ingredients and deliver it hot to your door.
-          </p>
+          <p className="text-body-lg text-white/70">{t.hero.description}</p>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button href="/menu" size="lg">
-              Order Now
+              {t.common.orderNow}
             </Button>
             <Button
               href="/menu"
@@ -53,7 +71,7 @@ export function Hero() {
               size="lg"
               className="border-white/20 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
             >
-              View Menu
+              {t.common.viewMenu}
             </Button>
           </div>
 

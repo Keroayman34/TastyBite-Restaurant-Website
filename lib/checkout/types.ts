@@ -1,3 +1,5 @@
+import type { CurrencyCode, LanguageCode } from "@/domain/entities";
+
 export interface CheckoutCustomerInfo {
   fullName: string;
   phone: string;
@@ -19,5 +21,6 @@ export interface WhatsAppOrderPayload {
   subtotal: number;
   deliveryFee: number;
   total: number;
-  currency: string;
+  currency: CurrencyCode;
+  language?: LanguageCode;
 }

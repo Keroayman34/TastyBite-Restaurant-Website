@@ -31,20 +31,20 @@ describe("product image integrity", () => {
   });
 
   it("Double Cheeseburger has a real double cheeseburger image", () => {
-    const product = products.find((p) => p.name === "Double Cheeseburger");
+    const product = products.find((p) => p.id === "prod-cheeseburger");
     expect(product).toBeDefined();
     expect(product!.image).toBe("/images/products/double-cheeseburger.jpg");
   });
 
   it("Berry Blast Smoothie has a real smoothie image, not a burger", () => {
-    const product = products.find((p) => p.name === "Berry Blast Smoothie");
+    const product = products.find((p) => p.id === "prod-berry-smoothie");
     expect(product).toBeDefined();
     expect(product!.image).toBe("/images/products/berry-blast-smoothie.jpg");
     expect(product!.image).not.toContain("burger");
   });
 
   it("Hot Chocolate has a real hot chocolate image and is available", () => {
-    const product = products.find((p) => p.name === "Hot Chocolate");
+    const product = products.find((p) => p.id === "prod-hot-chocolate");
     expect(product).toBeDefined();
     expect(product!.image).toBe("/images/products/hot-chocolate.jpg");
     expect(product!.available).toBe(true);

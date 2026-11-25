@@ -11,6 +11,7 @@ import { searchProducts, filterByCategory, filterByTags, sortProducts } from "@/
 import type { FilterTag, SortOption } from "@/lib/menu";
 import { products } from "@/data/products";
 import { categories } from "@/data/categories";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 interface MenuClientProps {
   initialCategory?: string | null;
@@ -18,6 +19,7 @@ interface MenuClientProps {
 
 export function MenuClient({ initialCategory = null }: MenuClientProps) {
   const router = useRouter();
+  const { language } = usePreferences();
 
   const [search, setSearch] = useState("");
   const [activeFilters, setActiveFilters] = useState<FilterTag[]>([]);
@@ -55,9 +57,9 @@ export function MenuClient({ initialCategory = null }: MenuClientProps) {
     result = filterByCategory(result, categoryId);
     result = searchProducts(result, search);
     result = filterByTags(result, activeFilters);
-    result = sortProducts(result, sort);
+    result = sortProducts(result, sort, language);
     return result;
-  }, [selectedCategory, search, activeFilters, sort]);
+  }, [selectedCategory, search, activeFilters, sort, language]);
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">

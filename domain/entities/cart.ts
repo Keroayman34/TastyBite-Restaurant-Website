@@ -1,8 +1,9 @@
+import type { LocalizedField } from "./i18n";
 import type { Product, ProductOptionChoice } from "./product";
 
 export interface SelectedOption {
   optionId: string;
-  optionName: string;
+  optionName: LocalizedField;
   choices: ProductOptionChoice[];
 }
 

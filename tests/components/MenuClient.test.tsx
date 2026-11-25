@@ -12,77 +12,77 @@ vi.mock("next/navigation", () => ({
 describe("MenuClient", () => {
   it("renders category sidebar", () => {
     render(<MenuClient initialCategory={null} />);
-    expect(screen.getByText("All Items")).toBeInTheDocument();
-    expect(screen.getByText("Pizza")).toBeInTheDocument();
-    expect(screen.getByText("Burgers")).toBeInTheDocument();
+    expect(screen.getByText("Tutti i Piatti")).toBeInTheDocument();
+    expect(screen.getByText("Pizze")).toBeInTheDocument();
+    expect(screen.getByText("Burger")).toBeInTheDocument();
   });
 
   it("renders search input", () => {
     render(<MenuClient initialCategory={null} />);
     expect(
-      screen.getByPlaceholderText("Search for pizza, burger..."),
+      screen.getByPlaceholderText("Cerca pizza, burger, pasta..."),
     ).toBeInTheDocument();
   });
 
   it("renders filter chips", () => {
     render(<MenuClient initialCategory={null} />);
-    expect(screen.getByRole("button", { name: "Popular" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "New" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Offers" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Veggie" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Spicy" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Popolari" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Novità" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Offerte" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Vegetariano" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Piccante" })).toBeInTheDocument();
   });
 
   it("renders product grid", () => {
     render(<MenuClient initialCategory={null} />);
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
-    expect(screen.getByText("Classic Burger")).toBeInTheDocument();
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
+    expect(screen.getByText("Burger Classico")).toBeInTheDocument();
   });
 
   it("filters products by search", async () => {
     const user = userEvent.setup();
     render(<MenuClient initialCategory={null} />);
-    const searchInput = screen.getByPlaceholderText("Search for pizza, burger...");
+    const searchInput = screen.getByPlaceholderText("Cerca pizza, burger, pasta...");
     await user.type(searchInput, "margherita");
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
-    expect(screen.queryByText("Classic Burger")).not.toBeInTheDocument();
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
+    expect(screen.queryByText("Burger Classico")).not.toBeInTheDocument();
   });
 
   it("shows empty state when no products match", async () => {
     const user = userEvent.setup();
     render(<MenuClient initialCategory={null} />);
-    const searchInput = screen.getByPlaceholderText("Search for pizza, burger...");
+    const searchInput = screen.getByPlaceholderText("Cerca pizza, burger, pasta...");
     await user.type(searchInput, "xyznonexistent");
-    expect(screen.getByText("No products found")).toBeInTheDocument();
+    expect(screen.getByText("Nessun prodotto trovato")).toBeInTheDocument();
   });
 
   it("clears filters when clear button is clicked", async () => {
     const user = userEvent.setup();
     render(<MenuClient initialCategory={null} />);
-    const searchInput = screen.getByPlaceholderText("Search for pizza, burger...");
+    const searchInput = screen.getByPlaceholderText("Cerca pizza, burger, pasta...");
     await user.type(searchInput, "xyznonexistent");
-    await user.click(screen.getByRole("button", { name: "Clear filters" }));
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Cancella filtri" }));
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
   });
 
   it("filters by tag", async () => {
     const user = userEvent.setup();
     render(<MenuClient initialCategory={null} />);
-    await user.click(screen.getByRole("button", { name: "Veggie" }));
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
-    expect(screen.queryByText("Classic Burger")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Vegetariano" }));
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
+    expect(screen.queryByText("Burger Classico")).not.toBeInTheDocument();
   });
 
   it("navigates to category on click", async () => {
     const user = userEvent.setup();
     render(<MenuClient initialCategory={null} />);
-    await user.click(screen.getByRole("button", { name: "Pizza" }));
+    await user.click(screen.getByRole("button", { name: "Pizze" }));
     expect(mockPush).toHaveBeenCalledWith("/menu?category=pizza");
   });
 
   it("filters by initial category prop", () => {
     render(<MenuClient initialCategory="pizza" />);
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
-    expect(screen.queryByText("Classic Burger")).not.toBeInTheDocument();
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
+    expect(screen.queryByText("Burger Classico")).not.toBeInTheDocument();
   });
 });

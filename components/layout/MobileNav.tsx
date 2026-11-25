@@ -9,15 +9,19 @@ import { navLinks } from "@/config/navigation";
 import { restaurant } from "@/config/restaurant";
 import { IconButton } from "@/components/ui/IconButton";
 import { Button } from "@/components/ui/Button";
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
+import { CurrencySelector } from "@/components/layout/CurrencySelector";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = usePreferences();
 
   return (
     <div className="lg:hidden">
       <IconButton
-        label={open ? "Close menu" : "Open menu"}
+        label={open ? t.header.closeMenu : t.header.openMenu}
         variant="brand"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
@@ -33,7 +37,15 @@ export function MobileNav() {
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
-        <nav className="container-page flex flex-col gap-1 py-4" aria-label="Mobile">
+        <nav
+          className="container-page flex flex-col gap-1 py-4"
+          aria-label={t.nav.mobileAria}
+        >
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-4 pb-3 sm:hidden">
+            <LanguageSelector />
+            <CurrencySelector />
+          </div>
+
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
 
@@ -50,13 +62,13 @@ export function MobileNav() {
                 )}
                 onClick={() => setOpen(false)}
               >
-                {link.label}
+                {t.nav[link.key]}
               </Link>
             );
           })}
           <div className="mt-2 border-t border-white/10 px-4 pt-4">
             <Button href={`tel:${restaurant.phone}`} fullWidth>
-              Call {restaurant.phone}
+              {t.header.callPhone} {restaurant.phone}
             </Button>
           </div>
         </nav>

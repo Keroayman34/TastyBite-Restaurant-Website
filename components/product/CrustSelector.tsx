@@ -2,8 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import type { ProductOption, ProductOptionChoice } from "@/domain/entities";
-import { formatPrice } from "@/lib/format";
-import { restaurant } from "@/config/restaurant";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 interface CrustSelectorProps {
   option: ProductOption;
@@ -12,10 +11,13 @@ interface CrustSelectorProps {
 }
 
 export function CrustSelector({ option, selected, onSelect }: CrustSelectorProps) {
+  const { formatPrice, localize } = usePreferences();
+  const optionName = localize(option.name);
+
   return (
     <fieldset className="flex flex-col gap-3">
-      <legend className="text-label font-semibold text-foreground">{option.name}</legend>
-      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={option.name}>
+      <legend className="text-label font-semibold text-foreground">{optionName}</legend>
+      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label={optionName}>
         {option.choices.map((choice) => {
           const isSelected = selected?.id === choice.id;
 
@@ -33,10 +35,10 @@ export function CrustSelector({ option, selected, onSelect }: CrustSelectorProps
                   : "border-border-strong bg-surface text-foreground-muted hover:border-primary-300 hover:text-foreground",
               )}
             >
-              {choice.name}
+              {localize(choice.name)}
               {choice.priceDelta > 0 ? (
                 <span className="ml-1 text-caption text-foreground-subtle">
-                  +{formatPrice(choice.priceDelta, restaurant.currency)}
+                  +{formatPrice(choice.priceDelta)}
                 </span>
               ) : null}
             </button>

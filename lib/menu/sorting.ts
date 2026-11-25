@@ -1,7 +1,11 @@
-import type { Product } from "@/domain/entities";
+import { getLocalizedText, type LanguageCode, type Product } from "@/domain/entities";
 import type { SortOption } from "./types";
 
-export function sortProducts(products: Product[], sort: SortOption): Product[] {
+export function sortProducts(
+  products: Product[],
+  sort: SortOption,
+  language: LanguageCode = "it",
+): Product[] {
   const sorted = [...products];
 
   switch (sort) {
@@ -10,7 +14,12 @@ export function sortProducts(products: Product[], sort: SortOption): Product[] {
     case "price-desc":
       return sorted.sort((a, b) => b.basePrice - a.basePrice);
     case "name-asc":
-      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      return sorted.sort((a, b) =>
+        getLocalizedText(a.name, language).localeCompare(
+          getLocalizedText(b.name, language),
+          language,
+        ),
+      );
     case "featured":
     default:
       return sorted.sort((a, b) => {

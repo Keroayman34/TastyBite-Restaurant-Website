@@ -17,34 +17,36 @@ describe("MenuProductCard", () => {
 
   it("renders product name and description", () => {
     render(<MenuProductCard product={availableProduct} />);
-    expect(screen.getByText("Margherita Pizza")).toBeInTheDocument();
-    expect(screen.getByText("Fresh tomato sauce, mozzarella, basil")).toBeInTheDocument();
+    expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
+    expect(
+      screen.getByText("Salsa di pomodoro fresco, mozzarella fior di latte e basilico"),
+    ).toBeInTheDocument();
   });
 
-  it("renders price in EGP", () => {
+  it("renders price in EUR", () => {
     render(<MenuProductCard product={availableProduct} />);
-    expect(screen.getByText(/EGP\s*180/)).toBeInTheDocument();
+    expect(screen.getByText(/7,00\s*€/)).toBeInTheDocument();
   });
 
   it("renders add to cart button for available products", () => {
     render(<MenuProductCard product={availableProduct} />);
     expect(
-      screen.getByRole("button", { name: /Add Margherita Pizza to cart/i }),
+      screen.getByRole("button", { name: /Aggiungi Pizza Margherita al carrello/i }),
     ).toBeEnabled();
   });
 
   it("disables add to cart for unavailable products", () => {
     render(<MenuProductCard product={unavailableProduct} />);
-    expect(screen.getByRole("button", { name: /Add/i })).toBeDisabled();
+    expect(screen.getByRole("button", { name: /Aggiungi/i })).toBeDisabled();
   });
 
   it("shows unavailable badge for unavailable products", () => {
     render(<MenuProductCard product={unavailableProduct} />);
-    expect(screen.getByText("Unavailable")).toBeInTheDocument();
+    expect(screen.getByText("Non disponibile")).toBeInTheDocument();
   });
 
   it("renders popular badge for popular products", () => {
     render(<MenuProductCard product={availableProduct} />);
-    expect(screen.getByText("Popular")).toBeInTheDocument();
+    expect(screen.getByText("Popolare")).toBeInTheDocument();
   });
 });

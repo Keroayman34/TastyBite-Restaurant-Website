@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { categories } from "@/data/categories";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 const categoryIcons: Record<string, LucideIcon> = {
   "cat-pizza": Pizza,
@@ -32,12 +33,13 @@ interface CategorySidebarProps {
 }
 
 export function CategorySidebar({ activeCategory, onSelect }: CategorySidebarProps) {
+  const { t, localize } = usePreferences();
   const allItemsActive = !activeCategory;
 
   return (
     <nav
       className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:gap-1 lg:overflow-visible lg:pb-0"
-      aria-label="Menu categories"
+      aria-label={t.menu.categoriesAria}
     >
       <button
         type="button"
@@ -51,7 +53,7 @@ export function CategorySidebar({ activeCategory, onSelect }: CategorySidebarPro
         )}
       >
         <AllItemsIcon className="h-4 w-4" />
-        <span>All Items</span>
+        <span>{t.menu.allItems}</span>
       </button>
 
       {categories.map((category) => {
@@ -72,7 +74,7 @@ export function CategorySidebar({ activeCategory, onSelect }: CategorySidebarPro
             )}
           >
             <Icon className="h-4 w-4" />
-            <span>{category.name}</span>
+            <span>{localize(category.name)}</span>
           </button>
         );
       })}

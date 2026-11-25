@@ -9,6 +9,7 @@ import {
   OrderConfirmation,
   type OrderConfirmationData,
 } from "@/components/checkout/OrderConfirmation";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 import { buildWhatsAppOrderPayload } from "@/lib/checkout/order";
 import { generateWhatsAppMessage, buildWhatsAppUrl } from "@/lib/checkout/whatsapp";
 import { restaurant } from "@/config/restaurant";
@@ -16,6 +17,7 @@ import type { CheckoutFormData } from "@/lib/checkout/validation";
 
 export function CheckoutPage() {
   const { items, subtotal, deliveryFee, total, clearCart } = useCart();
+  const { language, currency, t } = usePreferences();
   const [error, setError] = useState<string | null>(null);
   const [submittedOrder, setSubmittedOrder] = useState<OrderConfirmationData | null>(
     null,
@@ -24,12 +26,12 @@ export function CheckoutPage() {
   const handleSubmit = useCallback(
     (data: CheckoutFormData) => {
       if (items.length === 0) {
-        setError("Your cart is empty. Please add items before checking out.");
+        setError(t.checkout.emptyCartError);
         return;
       }
 
       try {
-        const order = buildWhatsAppOrderPayload(items, data);
+        const order = buildWhatsAppOrderPayload(items, data, { language, currency });
         const message = generateWhatsAppMessage(order);
         const url = buildWhatsAppUrl(restaurant.whatsapp, message);
 
@@ -39,17 +41,16 @@ export function CheckoutPage() {
           customerName: order.customer.fullName,
           itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
           total: order.total,
-          currency: order.currency,
           whatsappUrl: url,
         };
 
         clearCart();
         setSubmittedOrder(confirmationData);
       } catch {
-        setError("Unable to generate order. Please try again.");
+        setError(t.checkout.genericError);
       }
     },
-    [items, clearCart],
+    [items, clearCart, language, currency, t],
   );
 
   if (submittedOrder) {

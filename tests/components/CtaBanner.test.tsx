@@ -6,18 +6,20 @@ describe("CtaBanner", () => {
   it("renders headline", () => {
     render(<CtaBanner />);
     expect(
-      screen.getByRole("heading", { level: 2, name: /Craving Something Delicious/i }),
+      screen.getByRole("heading", { level: 2, name: /Hai Voglia di Qualcosa di Buono/i }),
     ).toBeInTheDocument();
   });
 
   it("renders call to order CTA", () => {
     render(<CtaBanner />);
-    expect(screen.getByRole("link", { name: /Call to Order/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Chiama per Ordinare/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders browse menu CTA", () => {
     render(<CtaBanner />);
-    expect(screen.getByRole("link", { name: "Browse Menu" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Esplora il Menu" })).toHaveAttribute(
       "href",
       "/menu",
     );

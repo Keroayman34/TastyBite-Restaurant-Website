@@ -4,16 +4,22 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { MapPin, Phone, Clock, Navigation } from "lucide-react";
 import { locations } from "@/data/locations";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
 export function LocationSelector() {
   const [activeId, setActiveId] = useState(locations[0]?.id ?? "");
+  const { t, localize } = usePreferences();
   const activeLocation = locations.find((l) => l.id === activeId) ?? locations[0];
 
   if (!activeLocation) return null;
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="Select a location">
+      <div
+        className="flex flex-wrap gap-2"
+        role="tablist"
+        aria-label={t.locations.selectAria}
+      >
         {locations.map((location) => {
           const isActive = location.id === activeId;
 
@@ -31,19 +37,21 @@ export function LocationSelector() {
                   : "border-border-strong bg-surface text-foreground-muted hover:border-primary-300 hover:text-foreground",
               )}
             >
-              {location.name}
+              {localize(location.name)}
             </button>
           );
         })}
       </div>
 
       <div className="flex flex-col gap-4 rounded-card border border-border bg-surface p-6 shadow-card">
-        <h3 className="text-h4 text-foreground">{activeLocation.name}</h3>
+        <h3 className="text-h4 text-foreground">{localize(activeLocation.name)}</h3>
 
         <div className="flex flex-col gap-3">
           <div className="flex items-start gap-3">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-foreground-muted" />
-            <span className="text-body-sm text-foreground">{activeLocation.address}</span>
+            <span className="text-body-sm text-foreground">
+              {localize(activeLocation.address)}
+            </span>
           </div>
           <a
             href={`tel:${activeLocation.phone}`}
@@ -55,7 +63,7 @@ export function LocationSelector() {
           <div className="flex items-center gap-3">
             <Clock className="h-4 w-4 shrink-0 text-foreground-muted" />
             <span className="text-body-sm text-foreground">
-              {activeLocation.workingHours}
+              {localize(activeLocation.workingHours)}
             </span>
           </div>
         </div>
@@ -67,7 +75,7 @@ export function LocationSelector() {
           className="inline-flex h-10 w-fit items-center gap-2 rounded-button bg-primary-500 px-5 text-body-sm font-semibold text-white shadow-cta transition-colors hover:bg-primary-600"
         >
           <Navigation className="h-4 w-4" />
-          Get Directions
+          {t.locations.getDirections}
         </a>
       </div>
     </div>

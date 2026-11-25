@@ -6,18 +6,20 @@ describe("Hero", () => {
   it("renders the main headline", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Delicious Food, Delivered Fast",
+      "Cucina Autentica, Consegna Veloce",
     );
   });
 
   it("renders supporting text", () => {
     render(<Hero />);
-    expect(screen.getByText(/fresh ingredients and deliver it hot/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/ingredienti freschi e lo consegniamo caldo/i),
+    ).toBeInTheDocument();
   });
 
   it("renders primary CTA", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: "Order Now" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Ordina Ora" })).toHaveAttribute(
       "href",
       "/menu",
     );
@@ -25,7 +27,7 @@ describe("Hero", () => {
 
   it("renders secondary CTA", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: "View Menu" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Scopri il Menu" })).toHaveAttribute(
       "href",
       "/menu",
     );
@@ -38,8 +40,8 @@ describe("Hero", () => {
 
   it("renders benefit badges", () => {
     render(<Hero />);
-    expect(screen.getByText("Fast Delivery")).toBeInTheDocument();
-    expect(screen.getByText("Fresh Ingredients")).toBeInTheDocument();
-    expect(screen.getByText("Free Delivery")).toBeInTheDocument();
+    expect(screen.getByText("Consegna Rapida")).toBeInTheDocument();
+    expect(screen.getByText("Ingredienti Freschi")).toBeInTheDocument();
+    expect(screen.getByText("Consegna Gratuita")).toBeInTheDocument();
   });
 });

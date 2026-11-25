@@ -1,14 +1,15 @@
 import type { SocialLink } from "./social-link";
+import type { CurrencyCode, LocalizedField } from "./i18n";
 
 export interface WorkingHours {
-  days: string;
+  days: LocalizedField;
   hours: string;
 }
 
 export interface Restaurant {
   id: string;
   name: string;
-  tagline: string;
+  tagline: LocalizedField;
   logoUrl: string;
   phone: string;
   whatsapp: string;
@@ -17,6 +18,7 @@ export interface Restaurant {
   workingHours: WorkingHours[];
   socialLinks: SocialLink[];
   mapUrl: string;
-  currency: string;
+  currency: CurrencyCode;
   deliveryFee: number;
+  freeDeliveryThreshold: number;
 }

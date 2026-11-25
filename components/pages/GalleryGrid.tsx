@@ -4,30 +4,42 @@ import { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/ui/ImageWithFallback";
 import { galleryImages } from "@/data/gallery";
+import { usePreferences } from "@/components/preferences/PreferencesContext";
 
-const categories = ["All", "Pizza", "Burgers", "Behind The Scenes", "Customers"] as const;
+type GalleryFilter = "all" | "pizza" | "burgers" | "behind" | "customers";
 
 export function GalleryGrid() {
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [activeCategory, setActiveCategory] = useState<GalleryFilter>("all");
+  const { t, localize } = usePreferences();
+
+  const categories: { id: GalleryFilter; label: string }[] = [
+    { id: "all", label: t.gallery.catAll },
+    { id: "pizza", label: t.gallery.catPizza },
+    { id: "burgers", label: t.gallery.catBurgers },
+    { id: "behind", label: t.gallery.catBehindScenes },
+    { id: "customers", label: t.gallery.catCustomers },
+  ];
 
   const filteredImages = useMemo(() => {
-    if (activeCategory === "All") return galleryImages;
-    return galleryImages.filter((img) =>
-      img.alt.toLowerCase().includes(activeCategory.toLowerCase().split(" ")[0]),
-    );
+    if (activeCategory === "all") return galleryImages;
+    return galleryImages.filter((img) => img.category === activeCategory);
   }, [activeCategory]);
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Filter gallery">
+      <div
+        className="flex flex-wrap gap-2"
+        role="group"
+        aria-label={t.gallery.filterAria}
+      >
         {categories.map((category) => {
-          const isActive = category === activeCategory;
+          const isActive = category.id === activeCategory;
 
           return (
             <button
-              key={category}
+              key={category.id}
               type="button"
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveCategory(category.id)}
               aria-pressed={isActive}
               className={cn(
                 "rounded-full border px-4 py-2 text-body-sm font-medium transition-colors",
@@ -36,7 +48,7 @@ export function GalleryGrid() {
                   : "border-border-strong bg-surface text-foreground-muted hover:border-primary-300 hover:text-foreground",
               )}
             >
-              {category}
+              {category.label}
             </button>
           );
         })}
@@ -51,7 +63,7 @@ export function GalleryGrid() {
             >
               <ImageWithFallback
                 src={image.src}
-                alt={image.alt}
+                alt={localize(image.alt)}
                 unoptimized
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -62,7 +74,7 @@ export function GalleryGrid() {
         </div>
       ) : (
         <p className="py-8 text-center text-body-sm text-foreground-muted">
-          No images found for this category.
+          {t.gallery.emptyMsg}
         </p>
       )}
     </div>
