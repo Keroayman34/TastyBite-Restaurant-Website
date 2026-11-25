@@ -40,7 +40,11 @@ export function buildWhatsAppOrderPayload(
   }));
 
   const subtotal = calculateCartSubtotal(items);
-  const deliveryFee = calculateDeliveryFee(items, restaurant.deliveryFee);
+  const deliveryFee = calculateDeliveryFee(
+    items,
+    restaurant.deliveryFee,
+    restaurant.freeDeliveryThreshold,
+  );
   const total = calculateCartTotal(subtotal, deliveryFee);
 
   return {

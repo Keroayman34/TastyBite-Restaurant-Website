@@ -58,6 +58,16 @@ describe("cart calculations", () => {
     expect(calculateDeliveryFee([], 50)).toBe(0);
   });
 
+  it("charges delivery fee below the free-delivery threshold", () => {
+    const items = [makeCartItem({ subtotal: 20 })];
+    expect(calculateDeliveryFee(items, 2.5, 25)).toBe(2.5);
+  });
+
+  it("waives delivery fee at or above the free-delivery threshold", () => {
+    expect(calculateDeliveryFee([makeCartItem({ subtotal: 25 })], 2.5, 25)).toBe(0);
+    expect(calculateDeliveryFee([makeCartItem({ subtotal: 40 })], 2.5, 25)).toBe(0);
+  });
+
   it("calculates total", () => {
     expect(calculateCartTotal(480, 50)).toBe(530);
   });

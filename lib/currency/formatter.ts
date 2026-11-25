@@ -6,10 +6,18 @@ import { EXCHANGE_RATE_EUR_TO_USD } from "./config";
  * Rounds to 2 decimal places to avoid floating-point drift.
  */
 export function convertFromEur(amountEur: number, currency: CurrencyCode): number {
+  const eurCents = Math.round(amountEur * 100);
+
   if (currency === "EUR") {
-    return Math.round(amountEur * 100) / 100;
+    return eurCents / 100;
   }
-  return Math.round(amountEur * EXCHANGE_RATE_EUR_TO_USD * 100) / 100;
+
+  // Integer arithmetic: convert EUR cents to USD cents using a scaled rate so
+  // binary floating-point drift cannot change a half-cent rounding decision
+  // (e.g. 10.00 EUR must round to 10.94 USD, not 10.93).
+  const rateScaled = Math.round(EXCHANGE_RATE_EUR_TO_USD * 1_000_000);
+  const usdCents = Math.round((eurCents * rateScaled) / 1_000_000);
+  return usdCents / 100;
 }
 
 /**

@@ -7,10 +7,7 @@ import type { TranslationDictionary } from "@/lib/i18n/translations/types";
 // ---------------------------------------------------------------------------
 // Helper: recursively collect all leaf key-paths from a nested object
 // ---------------------------------------------------------------------------
-function collectKeyPaths(
-  obj: Record<string, unknown>,
-  prefix = "",
-): string[] {
+function collectKeyPaths(obj: Record<string, unknown>, prefix = ""): string[] {
   return Object.entries(obj).flatMap(([key, val]) => {
     const path = prefix ? `${prefix}.${key}` : key;
     if (val !== null && typeof val === "object" && !Array.isArray(val)) {
@@ -84,12 +81,8 @@ describe("getDictionary()", () => {
   });
 
   it("Italian and English dictionaries have structurally identical key sets", () => {
-    const itPaths = collectKeyPaths(
-      itDict as unknown as Record<string, unknown>,
-    ).sort();
-    const enPaths = collectKeyPaths(
-      enDict as unknown as Record<string, unknown>,
-    ).sort();
+    const itPaths = collectKeyPaths(itDict as unknown as Record<string, unknown>).sort();
+    const enPaths = collectKeyPaths(enDict as unknown as Record<string, unknown>).sort();
 
     expect(itPaths).toEqual(enPaths);
   });
@@ -141,7 +134,7 @@ describe("getDictionary()", () => {
   });
 
   it("whatsapp section contains the required message keys in both languages", () => {
-    const required = ["greeting", "orderSummary", "total", "note"] as const;
+    const required = ["header", "customer", "order", "total"] as const;
     const itWa = getDictionary("it").whatsapp as Record<string, unknown>;
     const enWa = getDictionary("en").whatsapp as Record<string, unknown>;
 
@@ -158,16 +151,16 @@ describe("getDictionary()", () => {
       /^(Home|Inizio|Benvenuti)/i,
     );
     // Cart in Italian should be "Carrello" or similar
-    const cartLabel = (dict.cart as Record<string, string>).title;
-    expect(cartLabel).toBeTruthy();
+    const cartLabel = dict.cart.pageTitle;
+    expect(cartLabel).toBe("Il Tuo Carrello");
   });
 
   it("English translations are actually in English (spot-checks)", () => {
     const dict = getDictionary("en");
-    const cartLabel = (dict.cart as Record<string, string>).title;
-    expect(cartLabel).toBeTruthy();
+    const cartLabel = dict.cart.pageTitle;
+    expect(cartLabel).toBe("Your Cart");
     // The English checkout button should contain expected English text
-    const checkoutBtn = (dict.checkout as Record<string, string>).submit;
-    expect(checkoutBtn).toBeTruthy();
+    const checkoutBtn = dict.checkout.confirmWhatsApp;
+    expect(checkoutBtn).toContain("WhatsApp");
   });
 });

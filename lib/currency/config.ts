@@ -7,10 +7,10 @@ export const SUPPORTED_CURRENCIES: readonly CurrencyCode[] = ["EUR", "USD"] as c
 /**
  * European Central Bank (ECB) euro foreign exchange reference rate snapshot.
  * Source: https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html
- * Snapshot Date: 2026-11-24
+ * Snapshot Date: 2026-11-25
  */
-export const EXCHANGE_RATE_EUR_TO_USD = 1.0963;
-export const EXCHANGE_RATE_DATE = "2026-11-24";
+export const EXCHANGE_RATE_EUR_TO_USD = 1.0935;
+export const EXCHANGE_RATE_DATE = "2026-11-25";
 export const EXCHANGE_RATE_SOURCE = "European Central Bank (ECB)";
 
 export const CURRENCY_STORAGE_KEY = "tastybite_currency";

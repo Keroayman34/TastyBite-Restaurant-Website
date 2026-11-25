@@ -40,6 +40,31 @@ The project follows a feature-based architecture inspired by Clean Architecture:
 
 An internal design system preview is available at `/design-system` for development reference.
 
+## Internationalization & Currency
+
+TastyBite targets the Italian market and ships with full Italian and English
+support plus EUR/USD display pricing.
+
+| Setting  | Default        | Supported                       | Persistence                             |
+| -------- | -------------- | ------------------------------- | --------------------------------------- |
+| Language | Italian (`it`) | Italian (`it`), English (`en`)  | `localStorage` key `tastybite_language` |
+| Currency | Euro (`EUR`)   | Euro (`EUR`), US Dollar (`USD`) | `localStorage` key `tastybite_currency` |
+
+- Italian is the default UI language and SEO language; English can be selected
+  from the header language switcher.
+- Language and currency are **independent**: changing one never changes the
+  other.
+- All prices are stored once as canonical EUR (`basePrice`,
+  `originalPrice`, `discountedPrice`, `deliveryFee`). USD is derived at render
+  time from a documented ECB exchange-rate snapshot.
+- Formatting is locale-aware via `Intl.NumberFormat` (`€12,50`, `€12.50`,
+  `$13.99`, `13,99 $`).
+- The exchange-rate snapshot lives in `lib/currency/config.ts`.
+- Translation dictionaries live in `lib/i18n/translations/` (`it.ts`, `en.ts`)
+  and are typed by `types.ts`.
+- Italian-market pricing research and sources are documented in
+  [`docs/ITALIAN_MARKET_PRICING.md`](docs/ITALIAN_MARKET_PRICING.md).
+
 ## Features
 
 - Next.js foundation with App Router and TypeScript strict mode
@@ -52,6 +77,9 @@ An internal design system preview is available at `/design-system` for developme
 - Local storage abstraction for future cart persistence
 - Unit, component, and end-to-end testing foundation
 - Continuous integration workflow
+- Italian (default) and English localization across every page and UI message
+- EUR (default) and USD currency switching with locale-aware formatting
+- Canonical EUR pricing with documented Italian-market research
 
 ## Development
 
@@ -74,4 +102,4 @@ npm run build
 
 ## Project Status
 
-Phase 11 Complete — Production Ready (v1.5.0) (Frontend-only Phase 1 scope complete)
+Phase 1 Complete — Production Ready (v1.6.0) (Italian/English i18n, EUR/USD pricing, Italian-market menu)

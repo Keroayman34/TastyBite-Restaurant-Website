@@ -81,12 +81,12 @@ test("FLOW F: language and currency switch independently and persist", async ({
 
   // Switch currency to USD
   await page.locator('[data-testid="currency-btn-USD"]:visible').first().click();
-  // Language stays English while currency changes to USD ($7.67)
+  // Language stays English while currency changes to USD ($7.65)
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Delicious Food");
-  await expect(page.getByText(/\$7\.67/)).toBeVisible();
+  await expect(page.getByText(/\$7\.65/)).toBeVisible();
 
   // Reload and verify persistence
   await page.reload({ waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Delicious Food");
-  await expect(page.getByText(/\$7\.67/)).toBeVisible();
+  await expect(page.getByText(/\$7\.65/)).toBeVisible();
 });

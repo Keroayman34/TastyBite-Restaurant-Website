@@ -51,7 +51,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const subtotal = calculateCartSubtotal(state.items);
-    const deliveryFee = calculateDeliveryFee(state.items, restaurant.deliveryFee);
+    const deliveryFee = calculateDeliveryFee(
+      state.items,
+      restaurant.deliveryFee,
+      restaurant.freeDeliveryThreshold,
+    );
     const total = calculateCartTotal(subtotal, deliveryFee);
     repository.save({ items: state.items, subtotal, deliveryFee, total });
   }, [state.items]);
@@ -83,7 +87,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<CartContextValue>(() => {
     const subtotal = calculateCartSubtotal(state.items);
-    const deliveryFee = calculateDeliveryFee(state.items, restaurant.deliveryFee);
+    const deliveryFee = calculateDeliveryFee(
+      state.items,
+      restaurant.deliveryFee,
+      restaurant.freeDeliveryThreshold,
+    );
     const total = calculateCartTotal(subtotal, deliveryFee);
     const itemCount = calculateItemCount(state.items);
 

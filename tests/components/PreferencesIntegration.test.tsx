@@ -61,8 +61,8 @@ describe("Language and Currency Preferences Integration", () => {
       screen.getByRole("heading", { level: 2, name: "Piatti in Evidenza" }),
     ).toBeInTheDocument();
     expect(screen.getByText("Pizza Margherita")).toBeInTheDocument();
-    // 7.00 EUR * 1.0963 = 7.67 USD formatted in it-IT
-    expect(screen.getByText(/7,67\s*\$/)).toBeInTheDocument();
+    // 7.00 EUR * 1.0935 = 7.65 USD formatted in it-IT
+    expect(screen.getByText(/7,65\s*\$/)).toBeInTheDocument();
     expect(JSON.parse(localStorage.getItem(CURRENCY_STORAGE_KEY)!)).toBe("USD");
   });
 });

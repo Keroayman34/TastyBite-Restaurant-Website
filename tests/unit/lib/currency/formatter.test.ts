@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  convertFromEur,
-  formatMoney,
-  getNumberFormatLocale,
-  EXCHANGE_RATE_EUR_TO_USD,
-} from "@/lib/currency";
+import { convertFromEur, formatMoney, getNumberFormatLocale } from "@/lib/currency";
 
 describe("currency conversion and formatting", () => {
   it("keeps EUR amounts unchanged", () => {
@@ -13,9 +8,10 @@ describe("currency conversion and formatting", () => {
   });
 
   it("converts EUR to USD using documented ECB exchange rate snapshot", () => {
-    const expected = Math.round(10 * EXCHANGE_RATE_EUR_TO_USD * 100) / 100;
-    expect(convertFromEur(10, "USD")).toBe(expected);
-    expect(convertFromEur(7.0, "USD")).toBe(7.67);
+    // 2026-11-25 ECB snapshot: 1 EUR = 1.0935 USD, rounded to cents.
+    expect(convertFromEur(10, "USD")).toBe(10.94);
+    expect(convertFromEur(7.0, "USD")).toBe(7.65);
+    expect(convertFromEur(12.5, "USD")).toBe(13.67);
   });
 
   it("selects correct Intl locales for language and currency pairs", () => {
@@ -37,11 +33,11 @@ describe("currency conversion and formatting", () => {
 
   it("formats USD in English and Italian locales from canonical EUR", () => {
     const enUsd = formatMoney(10, "USD", "en");
-    expect(enUsd).toContain("10.96");
+    expect(enUsd).toContain("10.94");
     expect(enUsd).toContain("$");
 
     const itUsd = formatMoney(10, "USD", "it");
-    expect(itUsd).toContain("10,96");
+    expect(itUsd).toContain("10,94");
     expect(itUsd).toContain("$");
   });
 });

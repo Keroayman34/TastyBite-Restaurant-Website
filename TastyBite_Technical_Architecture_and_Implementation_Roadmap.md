@@ -1542,6 +1542,75 @@ WhatsApp
 
 ---
 
+# 27.1 Internationalization & Currency Architecture
+
+This section records the architecture added for the Italian market.
+
+## Language layer
+
+- `domain/entities/i18n.ts` defines `LanguageCode` (`it` | `en`),
+  `CurrencyCode` (`EUR` | `USD`), `LocalizedText` (`{ it, en }`),
+  `LocalizedField` (plain string or localized text) and the
+  `getLocalizedText()` helper.
+- `lib/i18n/translations/types.ts` is the typed contract for every dictionary
+  key. `it.ts` and `en.ts` both satisfy that contract, so a missing or extra key
+  fails type-checking.
+- `lib/i18n/index.ts` exposes `getDictionary(language)` with Italian fallback.
+- UI text is never hardcoded in components: components read the dictionary
+  returned by `usePreferences().t` and localized data fields through
+  `usePreferences().localize(field)`.
+- Entity data (`products`, `categories`, `offers`, `locations`, `reviews`,
+  `gallery`, restaurant tagline/hours) stores `{ it, en }` values and preserves
+  stable IDs, images and relationships.
+
+## Preference layer
+
+- `components/preferences/PreferencesContext.tsx` owns `language` and
+  `currency`, exposes `setLanguage`, `setCurrency`, `t`, `localize` and
+  `formatPrice`.
+- Preferences are independent and each persists to `localStorage`
+  (`tastybite_language`, `tastybite_currency`). The provider hydrates from
+  storage on mount and synchronizes `document.documentElement.lang`.
+- `DocumentSeoSync` updates the document title and meta description per route
+  and language. Static metadata defaults to Italian for crawlers.
+
+## Currency layer
+
+- EUR is canonical. Every monetary field is stored in EUR.
+- `lib/currency/config.ts` holds the default currency, supported currencies, the
+  documented ECB EUR/USD snapshot (rate + date + source) and storage key.
+- `lib/currency/formatter.ts` provides `convertFromEur()`,
+  `getNumberFormatLocale()` and `formatMoney()`.
+- Conversion rounds once to two decimals. Formatting uses `Intl.NumberFormat`
+  with `it-IT` for Italian and `en-IE`/`en-US` for English EUR/USD.
+- `formatPrice(amountEur)` is the only path used by product cards, product
+  details, option deltas, offers, cart, checkout, confirmation and the WhatsApp
+  message.
+
+## Calculation flow
+
+```text
+canonical EUR basePrice
+  + selected size/crust/extras deltas (EUR)
+  = unitPrice (EUR)
+  × quantity = item subtotal (EUR)
+  → cart subtotal (EUR)
+  + delivery fee (EUR, waived at/above free-delivery threshold)
+  = total (EUR)
+  → formatMoney(total, currency, language)
+```
+
+Because conversion happens only at formatting time, cart totals, checkout
+totals, offers and WhatsApp messages can never double-convert or disagree.
+
+## Documentation
+
+Italian-market research, comparables and source URLs are maintained in
+`docs/ITALIAN_MARKET_PRICING.md`. Update that file whenever prices or the
+exchange-rate snapshot change.
+
+---
+
 # 28. Source-of-Truth Rule
 
 This document is the project's technical reference.
@@ -1570,12 +1639,16 @@ Project: TastyBite
 Architecture: Approved
 Stack: Approved
 Implementation: Phase 1 (Phases 1–11) Implemented
-Current Version: v1.5.0
+Current Version: v1.6.0
 Current Phase: Phase 1 Complete (Frontend-only)
 Backend: Not planned for Phase 1 (Future Phase 2)
 Database: Not planned for Phase 1 (Future Phase 2)
+Languages: Italian (default), English
+Currencies: EUR (canonical/default), USD (derived display)
 ```
 
-Phase 1 (Phases 1 through 11) is fully implemented and hardened at **`v1.5.0`** as a production-ready, frontend-only application.
+Phase 1 (Phases 1 through 11) is fully implemented and hardened as a
+production-ready, frontend-only application. **v1.6.0** adds Italian/English
+internationalization, EUR/USD display pricing and Italian-market menu pricing.
 
 The project is currently ready for post-deployment review and future full-stack / backend integration planning.
